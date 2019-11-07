@@ -1,0 +1,11 @@
+<table>
+    <tr valign="top">
+        <td><img src="{{ resource.issuer.avatar(36) }}"></td>
+        <td>
+            <a href="{{ url_for('user', username=resource.issuer.username) }}">
+                {{ resource.issuer.username }}
+            </a>
+            says:<br>{{ resource.body }}
+        </td>
+    </tr>
+</table>

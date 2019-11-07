@@ -1,0 +1,164 @@
+{% extends "base/base.html" %}
+
+{% block styles %}
+<style type="text/css">
+    p {
+        font-size: 16px;
+    }
+</style>
+{% endblock  %}
+
+{% block script %}
+<script type="text/javascript">
+    function transfer() {
+        var datas = {
+            'username': document.getElementById('transfer_to').value,
+            'password': document.getElementById('password').value,
+            'resid': "{{ res.id }}"
+        }
+        $.ajax({
+            url: "{{ url_for('res_transfer') }}",
+            type: "POST",
+            data: datas,
+            dataType: "json",
+            success: function (data) {
+
+                if (data['code'] == 0) {
+                    document.getElementById('transfer_msg_success').innerHTML = data['msg'];
+                    window.location.reload();
+                } else {
+                    document.getElementById('transfer_msg_error').innerHTML = data['msg'];
+                }
+            }
+        })
+    }
+</script>
+{% endblock  %}
+
+{% block content %}
+
+<div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-white">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">{{title}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 标题： </p>
+                <p class="col-sm-10 text-left"> {{res.title}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 资源描述： </p>
+                <p class="col-sm-10 text-left"> {{res.body}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 数据附件： </p>
+                <p class="col-sm-10 text-left"> {{res.filename}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 发布时间： </p>
+                <p class="col-sm-10 text-left"> {{res.timestamp}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 更新时间： </p>
+                <p class="col-sm-10 text-left"> {{res.updatetime}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 购买次数： </p>
+                <p class="col-sm-10 text-left"> {{res.paid_nums()}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 价格(ED)： </p>
+                <p class="col-sm-10 text-left"> {{res.price}} </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 发布人： </p>
+                <p class="col-sm-10 text-left">
+                    <a href="{{url_for('user', username=res.issuer.username)}}">{{res.issuer.username}}</a>
+                </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-2 text-right" style="font-weight: bold;"> 访问权限： </p>
+                <p class="col-sm-10 text-left">
+                    {% if bought %} 有
+                    {% else %} 无
+                    {% endif %}
+                </p>
+            </div>
+            <div class="row">
+
+
+                {% if bought %}
+
+                <div class="col-md-2 col-md-offset-2">
+                    <a class="btn btn-primary"
+                        href="{{ url_for('download_res', resid=res.id, filename=res.filename) }}">下载资源</a>
+                </div>
+
+                <div class="col-md-3 col-md-offset-1">
+                    <button class="btn btn-primary"
+                        onclick="javascript: document.getElementById('div_transfer').hidden=false;">转让</button>
+                </div>
+
+
+                {% elif issued %}
+                <div class="col-md-3 col-md-offset-2">
+                    <a href="{{url_for('trace_buy', resid=res.id)}}" class="btn btn-primary">查看资源流转详情</a>
+                </div>
+                <div class="col-md-3 col-md-offset-2">
+                    <a href="{{url_for('edit_res', resid=res.id)}}" class="btn btn-primary">修改发布信息</a>
+                </div>
+
+                {% else %}
+                <div class="col-md-3 col-md-offset-2">
+                    <a href="{{url_for('res_buy', resid=res.id)}}" class="btn btn-primary">购 买</a>
+                </div>
+
+                {% endif %}
+            </div>
+            <div class="row" id="div_transfer" hidden>
+
+                <div class="col-md-12 ">
+                    <hr />
+                </div>
+
+                <div class="col-md-11 col-md-offset-1">
+                    <p class="text-danger" id="transfer_msg_error"></p>
+                    <p class="text-success" id="transfer_msg_success"></p>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <p class="col-md-2 text-right">
+                            转到：
+                        </p>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="transfer_to" size="10"
+                                placeholder="input her/his username">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <p class="col-md-2 text-right">
+                            支付密码：
+                        </p>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" size="32" placeholder="password">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-2">
+                            <button onclick="transfer();" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

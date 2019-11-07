@@ -1,0 +1,48 @@
+{% extends "base/base.html" %}
+
+{% block styles %}
+<style type="text/css">
+    hr {
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+</style>
+{% endblock  %}
+
+{% block script %}
+<script type="text/javascript">
+
+</script>
+{% endblock  %}
+
+{% block content %}
+
+<div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-white">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title">{{title}}</h4>
+        </div>
+        <div class="panel-body">
+            <form action="" method="POST"> 
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.amount.label }}
+                    {{ form.amount(size=10, class_='form-control', placeholder="输入提现金额") }}
+                    {% for error in form.amount.errors %}
+                    <p style="color: red; margin-bottom:0;" class="help-block">[{{ error }}]</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.paypwd.label }}
+                    {{ form.paypwd(size=30, class_='form-control', placeholder="Password") }}
+                    {% for error in form.paypwd.errors %}
+                    <p style="color: red; margin-bottom:0;" class="help-block">[{{ error }}]</p>
+                    {% endfor %}
+                </div>
+                {{ form.submit(class_="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
