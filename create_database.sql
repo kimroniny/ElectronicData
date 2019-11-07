@@ -1,1 +1,0 @@
-CREATE DATABASE IF NOT EXISTS electronic default character set utf8 COLLATE utf8_general_ci;
