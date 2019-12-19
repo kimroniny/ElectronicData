@@ -80,7 +80,7 @@
             <div class="row">
                 <p class="col-sm-2 text-right" style="font-weight: bold;"> 访问权限： </p>
                 <p class="col-sm-10 text-left">
-                    {% if bought %} 有
+                    {% if bought or issued %} 有
                     {% else %} 无
                     {% endif %}
                 </p>

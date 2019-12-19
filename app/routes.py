@@ -40,7 +40,7 @@ def index():
     # ).paginate(
     #     page, app.config['POSTS_PER_PAGE'], False
     # )
-    resources = Resource.query.paginate(
+    resources = Resource.query.order_by(Resource.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False
     )
     next_url = url_for(
@@ -130,12 +130,13 @@ def res_transfer():
                     if to_cert:
                         # if the to_user have the data, you cannot transfer this res to him/her
                         result['code'] = 1
-                        result['msg'] = 'user "{}" has have the data, so you cannot transfer it to her/him'.format(
+                        result['msg'] = '用户 "{}" 已经拥有该数据，所以不能再转让给TA'.format(
                             username)
                     else:
-                        user.obtain_cert(cert)
+                        new_cert = user.obtain_cert(cert)
+                        db.session.add(new_cert)
                         db.session.commit()
-                        result['msg'] = 'success !!!'
+                        result['msg'] = '资源转让成功 !!!'
 
     return json.dumps(result)
 
@@ -307,7 +308,7 @@ def reset_password(token):
 @app.route('/show_res_issue', methods=['POST'])
 @login_required
 def show_res_issue():
-    resources = current_user.resources.all()
+    resources = current_user.resources.order_by(Resource.timestamp.desc()).all()
     res = [resource.as_dict() for resource in resources]
     return json.dumps(res)
 
@@ -315,7 +316,7 @@ def show_res_issue():
 @app.route('/page_res_issue', methods=['GET', 'POST'])
 @login_required
 def page_res_issue():
-    resources = current_user.resources.all()
+    resources = current_user.resources.order_by(Resource.timestamp.desc()).all()
     return render_template(
         'myres/res_issue.html',
         resources=resources

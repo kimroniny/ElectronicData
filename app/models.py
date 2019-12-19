@@ -154,11 +154,12 @@ class User(UserMixin, db.Model):
     
     def obtain_cert(self, cert: Certs):
         # 首先需要添加新的购买记录
-        self.res_bought.append(Resource.query.filter_by(id=cert.resource_id).first())
+        # self.res_bought.append(Resource.query.filter_by(id=cert.resource_id).first())
         # 转让源点人的购买记录要加上转让终点人的id
         cert.transfer_to(self.id)
         # 创建新的购买记录，但是价格设为-1，代表当前凭证是转让得来的
         new_cert = Certs(resource_id=cert.resource_id, payer_id=self.id, value=-1, transfer_id=None)
+        return new_cert
         
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
