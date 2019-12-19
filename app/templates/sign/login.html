@@ -29,8 +29,8 @@
                   <!-- <img src="../../static/m/images/logo.svg" alt="logo"> -->
                   <img src="{{url_for('static', filename='m/images/logo.svg')}}" alt="logo">
                 </div>
-                <h4>Hello! let's get started</h4>
-                <h6 class="font-weight-light">Sign in to continue.</h6>
+                <h4>国家电网数据交易中心</h4>
+                <h6 class="font-weight-light">登录</h6>
                 
                   
                 <form class="pt-3" action="" method="POST">
@@ -88,11 +88,11 @@
                         {{ form.remember_me.label }}
                       </label>
                     </div>
-                    <a href="{{ url_for('reset_password_request') }}" class="auth-link text-black">Forgot password?</a>
+                    <a href="{{ url_for('reset_password_request') }}" class="auth-link text-black">忘记密码?</a>
                   </div>
                   <div class="text-center mt-4 font-weight-light">
-                    Don't have an account?
-                    <a href="{{ url_for('register') }}" class="text-primary">Register It</a>
+                    没有账户?
+                    <a href="{{ url_for('register') }}" class="text-primary">注册新账户</a>
                   </div>
                 </form>
               </div>

@@ -91,7 +91,7 @@ def issue():
                 app.config['RES_FILE_PATH'], str(res.id), res.filename
             )
         )
-        flash('1,successful!!!your new resource issued is on sale.')
+        flash('1,发布成功！！！资源已上架！')
         return redirect(url_for('index'))
     return render_template('issue/res.html', title="issue resource", form=form)
 
@@ -146,11 +146,11 @@ def res_buy(resid):
     resource = Resource.query.filter_by(id=resid).first_or_404()
     if resource:
         if resource.price > current_user.balance:
-            flash('0,your balance is not enough !!!')
+            flash('0,您的余额不足 !!!')
         else:
             current_user.buy_res(resource)
             db.session.commit()
-            flash('1,Congratulations!!! You have bought this resource')
+            flash('1,购买成功，您已经成功购买该资源')
     return redirect(url_for('res_detail', resid=resid))
 
 # 数据资源详情
@@ -194,7 +194,7 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         db.session.commit()
-        flash('1,Your changes have been saved.')
+        flash('1,您的修改内容已保存')
         return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
@@ -227,7 +227,7 @@ def edit_res(resid=None):
                     app.config['RES_FILE_PATH'], str(res.id), res.filename
                 )
             )
-        flash("1,You have changed your resource information !!!")
+        flash("1,资源信息已修改!!!")
         return redirect(url_for('res_detail', resid=res.id))
     elif request.method == 'GET':
         res = current_user.resources.filter_by(id=resid).first_or_404()
@@ -249,13 +249,13 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if session.get('image').lower() != form.verify_code.data.lower():
-            flash('0,Wrong verify code.')
+            flash('0,验证码输入错误')
             return render_template('sign/register.html', title='Register', form=form)
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('1,Congratulations, you are now a registered user!')
+        flash('1,注册成功')
         return redirect(url_for('login'))
     return render_template('sign/register.html', title='Register', form=form)
 
@@ -282,7 +282,7 @@ def reset_password_request():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_password_reset_email(user)
-        flash('0,Check your email for the instructions to reset your password')
+        flash('0,检查您的邮箱并按照指导说明重新设置密码')
         return redirect(url_for('login'))
     return render_template('reset_password_request.html',
                            title='Reset Password', form=form)
@@ -299,7 +299,7 @@ def reset_password(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('1,Your password has been reset.')
+        flash('1,密码已充值')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
@@ -411,9 +411,9 @@ def charge():
         if current_user.check_password(form.paypwd.data):
             current_user.balance += int(form.amount.data)
             db.session.commit()
-            flash('1,charge {} successfully'.format(form.amount.data))
+            flash('1,充值 {} 成功'.format(form.amount.data))
         else:
-            flash("0,password is wrong")
+            flash("0,密码错误")
     return render_template(
         'finance/charge.html',
         form=form,
@@ -431,12 +431,12 @@ def withdraw():
             if current_user.balance >= int(form.amount.data):
                 current_user.balance -= int(form.amount.data)
                 db.session.commit()
-                flash('1,withdraw {} successfully'.format(form.amount.data))
+                flash('1,提现 {} 成功'.format(form.amount.data))
             else:
-                flash('0,balance is not enough to withdraw {}'.format(
+                flash('0,余额不足以提现 {}'.format(
                     form.amount.data))
         else:
-            flash("0,password is wrong")
+            flash("0,密码错误")
     return render_template(
         'finance/withdraw.html',
         form=form,

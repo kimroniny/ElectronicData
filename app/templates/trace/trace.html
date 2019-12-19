@@ -38,22 +38,19 @@
                         {% if result %}
                         {% for cert in result %}
                         <tr>
-                            <!-- <th scope="row">1</th>
-                            <td>{{cert['time']}}</td>
-                            <td>{{cert['payer'].username}}</td>
-                            <td>{{cert['receiver'].username}}</td>
-                            <td>{{cert['type']}}</td>
-                            <td>{{cert['value']}}</td>
-                            <td>
-                                <a href="{{url_for('trace_transfer', resid=resid, userid=cert['payer'].id)}}" class="btn btn-default btn-sm">
-                                    追 踪
-                                </a>
-                            </td> -->
                             <th scope="row">1</th>
                             <td>{{cert.time}}</td>
                             <td>{{cert.payer.username}}</td>
                             <td>{{cert.receiver.username}}</td>
-                            <td>{{cert.type}}</td>
+                            <td>
+                                {% if cert.type == 'buy' %}
+                                    购买
+                                {% elif cert.type == 'trans' %}
+                                    转让
+                                {% else %}
+                                    未知
+                                {% endif %}
+                            </td>
                             <td>{{cert.value}}</td>
                             <td>
                                 <a href="{{url_for('trace_transfer', resid=resid, userid=cert.payer.id)}}" class="btn btn-default btn-sm">

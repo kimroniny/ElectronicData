@@ -6,21 +6,21 @@ from flask_wtf.file import FileField, FileRequired
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    verify_code = StringField('VerifyCode', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    username = StringField('用户名', validators=[DataRequired()])
+    password = PasswordField('密码', validators=[DataRequired()])
+    verify_code = StringField('验证码', validators=[DataRequired()])
+    remember_me = BooleanField('记住账户')
+    submit = SubmitField('登录')
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('用户名', validators=[DataRequired()])
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    password = PasswordField('密码', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    verify_code = StringField('VerifyCode', validators=[DataRequired()])
-    submit = SubmitField('Register')
+        '重置密码', validators=[DataRequired(), EqualTo('password')])
+    verify_code = StringField('验证码', validators=[DataRequired()])
+    submit = SubmitField('注册')
 
     # self-define validator
     def validate_username(self, username):
@@ -35,9 +35,9 @@ class RegistrationForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-    submit = SubmitField('Submit')
+    username = StringField('用户名', validators=[DataRequired()])
+    about_me = TextAreaField('关于我', validators=[Length(min=0, max=140)])
+    submit = SubmitField('提交')
 
     def __init__(self, original_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
@@ -50,11 +50,11 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 class EditResForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    body = TextAreaField('Description', validators=[DataRequired()])
-    price = IntegerField('Price', validators=[DataRequired()])
-    resfile = FileField('res file', validators=[])
-    submit = SubmitField('Confirm')
+    title = StringField('题目', validators=[DataRequired()])
+    body = TextAreaField('描述', validators=[DataRequired()])
+    price = IntegerField('价格', validators=[DataRequired()])
+    resfile = FileField('资源文件', validators=[])
+    submit = SubmitField('确认')
     resid = HiddenField()
 
     def validate_price(self, price):
@@ -84,11 +84,11 @@ class ResetPasswordForm(FlaskForm):
 
 
 class ResIssueForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    body = TextAreaField('Description', validators=[DataRequired()])
-    price = IntegerField('Price', validators=[DataRequired()])
-    resfile = FileField('res file', validators=[FileRequired()])
-    submit = SubmitField('Confirm')
+    title = StringField('题目', validators=[DataRequired()])
+    body = TextAreaField('描述', validators=[DataRequired()])
+    price = IntegerField('价格', validators=[DataRequired()])
+    resfile = FileField('资源文件', validators=[FileRequired()])
+    submit = SubmitField('确定提交')
 
     def validate_price(self, price):
         try:
@@ -101,23 +101,23 @@ class ResIssueForm(FlaskForm):
 
 class ResTransferForm(FlaskForm):
     res_id = HiddenField()
-    to = StringField('transfer to', validators=[DataRequired()], description="pls input his/her username")
-    submit = SubmitField('Confirm')
+    to = StringField('转让给', validators=[DataRequired()], description="pls input his/her username")
+    submit = SubmitField('确认')
 
     def validate_to(self, to):
         user = User.query.filter_by(username=to.data).first()
         if user is None:
-            raise ValidationError('invalid user, please confirm the username')
+            raise ValidationError('用户名无效，请确认是否输入正确')
 
 
 class ChargeForm(FlaskForm):
-    amount = IntegerField('charge amount', validators=[NumberRange(1, 1000), DataRequired()])
-    paypwd = PasswordField('password', validators=[DataRequired()])
-    submit = SubmitField('charge')
+    amount = IntegerField('充值金额', validators=[NumberRange(1, 1000), DataRequired()])
+    paypwd = PasswordField('密码', validators=[DataRequired()])
+    submit = SubmitField('充值')
 
 
 
 class WithdDraw(FlaskForm):
-    amount = IntegerField('withdraw amount', validators=[NumberRange(1, 1000), DataRequired()])
-    paypwd = PasswordField('password', validators=[DataRequired()])
-    submit = SubmitField('charge')
+    amount = IntegerField('提现金额', validators=[NumberRange(1, 1000), DataRequired()])
+    paypwd = PasswordField('密码', validators=[DataRequired()])
+    submit = SubmitField('提现')

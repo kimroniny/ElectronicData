@@ -79,6 +79,11 @@
                 <div class="page-sidebar-menu">
                     <ul class="accordion-menu">
                         <li>
+                            <a href="{{ url_for('user', username=current_user.username) }}">
+                                <span>当前用户：{{ current_user.username }}</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url_for('index') }}">
                                 <i class="menu-icon icon-home4"></i><span>首页</span>
                             </a>
@@ -163,10 +168,10 @@
                                 </li>
 
                             </ul>
-                            <!-- <ul class="nav navbar-nav navbar-right">
-                                <li><a href="javascript:void(0)" id="search-button"><i class="fa fa-search"></i></a>
-                                </li>
-                                <li class="dropdown">
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--<li><a href="javascript:void(0)" id="search-button"><i class="fa fa-search"></i></a>
+                                </li>-->
+                                <!--<li class="dropdown">
                                     <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"
                                         role="button" aria-haspopup="true" aria-expanded="false"><i
                                             class="fa fa-bell"></i></a>
@@ -224,8 +229,8 @@
                                         <li><a href="#">Account Settings</a></li>
                                         <li><a href="#">Log Out</a></li>
                                     </ul>
-                                </li>
-                            </ul> -->
+                                </li>-->
+                            </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
