@@ -1,35 +1,4 @@
-2020-09-11 01:55:38,362 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 01:56:06,949 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:02:17,027 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:09:21,280 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:10:16,415 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:13:31,034 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:14:42,748 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:15:20,840 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:16:20,730 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:39:37,664 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:41:10,873 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:41:58,831 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:44:15,305 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:50:29,892 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:52:02,310 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:52:44,895 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:54:55,543 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:58:48,995 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:59:13,285 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 02:59:51,569 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:02:50,885 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:03:20,965 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:08:45,076 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:09:02,626 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:17:06,622 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:22:50,667 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:24:04,200 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:25:06,459 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:25:29,430 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:25:42,253 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:27:18,114 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:28:21,071 ERROR: Exception on /page_res_bought [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-11 04:08:56,597 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -45,34 +14,8 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 370, in page_res_bought
-    Certs.payer_id == current_user.id, Certs.transfer_id == None
-AttributeError: type object 'Certs' has no attribute 'transfer_id'
-2020-09-11 03:28:25,287 ERROR: Exception on /page_res_issue [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 399, in _entity_descriptor
-    return getattr(entity, key)
-AttributeError: type object 'Certs' has no attribute 'transfer_id'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 341, in page_res_issue
-    resources=resources
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 194, in res_detail
+    issued=issued
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
@@ -85,25 +28,98 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_issue.html", line 1, in top-level template code
-    {% extends "base/base.html" %}
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
     return concat(self.root_render_func(self.new_context(vars)))
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_issue.html", line 14, in root
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
   File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
     "timeOut": "5000",
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_issue.html", line 51, in block_content
-    </div>
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 59, in block_content
+    <div class="panel-body">
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
     return __obj(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/models.py", line 82, in paid_nums
-    transfer_id=None
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1800, in filter_by
-    for key, value in kwargs.items()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1800, in <listcomp>
-    for key, value in kwargs.items()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 402, in _entity_descriptor
-    "Entity '%s' has no property '%s'" % (description, key)
-sqlalchemy.exc.InvalidRequestError: Entity '<class 'app.models.Certs'>' has no property 'transfer_id'
-2020-09-11 03:29:39,926 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 03:30:11,740 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'trace_donate' with values ['resid']. Did you forget to specify values ['userid']?
+2020-09-11 04:09:17,099 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 194, in res_detail
+    issued=issued
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
+    "timeOut": "5000",
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 59, in block_content
+    <div class="panel-body">
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'trace_donate' with values ['resid']. Did you forget to specify values ['userid']?
+2020-09-11 04:09:20,161 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 04:10:56,934 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 04:11:05,224 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 372, in my_res_donate
+    Certs.payer_id == current_user.id, Certs.transfer_id == None
+AttributeError: type object 'Certs' has no attribute 'transfer_id'

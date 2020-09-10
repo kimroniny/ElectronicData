@@ -1,19 +1,4 @@
-2020-09-10 22:53:39,549 ERROR: Exception on / [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
-    cursor, statement, parameters, context
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
-    cursor.execute(statement, parameters)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
-    res = self._query(query)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
-    db.query(q)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
-    _mysql.connection.query(self, query)
-MySQLdb._exceptions.OperationalError: (1054, "Unknown column 'certs.transfer_id' in 'field list'")
-
-The above exception was the direct cause of the following exception:
-
+2020-09-11 03:39:28,141 ERROR: Exception on / [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -48,68 +33,24 @@ Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
     return concat(self.root_render_func(self.new_context(vars)))
   File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 14, in root
-  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 74, in root
-    </a>
-  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 55, in block_content
-    </div>
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 48, in root
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
     return __obj(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/models.py", line 98, in paid_nums
-    def generate_pub_key(context):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3605, in count
-    return self.from_self(col).scalar()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3330, in scalar
-    ret = self.one()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3300, in one
-    ret = self.one_or_none()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3269, in one_or_none
-    ret = list(self)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3342, in __iter__
-    return self._execute_and_instances(context)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 3367, in _execute_and_instances
-    result = conn.execute(querycontext.statement, self._params)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
-    return meth(self, multiparams, params)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
-    distilled_params,
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1253, in _execute_context
-    e, statement, parameters, cursor, context
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1473, in _handle_dbapi_exception
-    util.raise_from_cause(sqlalchemy_exception, exc_info)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
-    raise value.with_traceback(tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
-    cursor, statement, parameters, context
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
-    cursor.execute(statement, parameters)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
-    res = self._query(query)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
-    db.query(q)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
-    _mysql.connection.query(self, query)
-sqlalchemy.exc.OperationalError: (MySQLdb._exceptions.OperationalError) (1054, "Unknown column 'certs.transfer_id' in 'field list'")
-[SQL: SELECT count(*) AS count_1 
-FROM (SELECT certs.id AS certs_id, certs.resource_id AS certs_resource_id, certs.payer_id AS certs_payer_id, certs.transfer_id AS certs_transfer_id, certs.timestamp_pay AS certs_timestamp_pay, certs.timestamp_trans AS certs_timestamp_trans, certs.value AS certs_value 
-FROM certs 
-WHERE certs.resource_id = %s AND certs.transfer_id IS NULL) AS anon_1]
-[parameters: (1,)]
-(Background on this error at: http://sqlalche.me/e/e3q8)
-2020-09-10 22:53:47,093 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 22:55:21,042 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 22:55:40,213 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 22:55:44,878 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 399, in _entity_descriptor
-    return getattr(entity, key)
-AttributeError: type object 'Certs' has no attribute 'transfer_id'
-
-During handling of the above exception, another exception occurred:
-
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'my_res_issue'. Did you mean 'show_res_issue' instead?
+2020-09-11 03:39:30,895 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 03:45:40,946 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 04:08:18,521 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 04:08:22,287 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -125,12 +66,40 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 170, in res_detail
-    resource_id=resid, payer_id=current_user.id, transfer_id=None).count()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1800, in filter_by
-    for key, value in kwargs.items()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/query.py", line 1800, in <listcomp>
-    for key, value in kwargs.items()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/base.py", line 402, in _entity_descriptor
-    "Entity '%s' has no property '%s'" % (description, key)
-sqlalchemy.exc.InvalidRequestError: Entity '<class 'app.models.Certs'>' has no property 'transfer_id'
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 194, in res_detail
+    issued=issued
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
+    "timeOut": "5000",
+  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 59, in block_content
+    <div class="panel-body">
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint '' with values ['resid']. Did you mean 'trace_donate' instead?
+2020-09-11 04:08:54,774 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]

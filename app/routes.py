@@ -183,13 +183,15 @@ def res_buy(resid):
 @login_required
 def res_detail(resid):
     resource = Resource.query.filter_by(id=resid).first_or_404()
-    bought = 1 <= Certs.query.filter_by(
-        resource_id=resid, payer_id=current_user.id).count() # 有可能捐赠多笔
+    # donated = 1 <= Certs.query.filter_by(
+    #     resource_id=resid, payer_id=current_user.id).count() # 有可能捐赠多笔
+    issued = resource.user_id == current_user.id
     return render_template(
         'detail/res.html',
         title='项目详情',
         res=resource,
-        bought=bought,
+        # bought=donated,
+        issued=issued
     )
 
 
@@ -332,9 +334,9 @@ def show_res_issue():
     return json.dumps(res)
 
 
-@app.route('/page_res_issue', methods=['GET', 'POST'])
+@app.route('/my_res_issue', methods=['GET', 'POST'])
 @login_required
-def page_res_issue():
+def my_res_issue():
     resources = current_user.resources.order_by(Resource.timestamp.desc()).all()
     return render_template(
         'myres/res_issue.html',
@@ -362,9 +364,9 @@ def show_res_bought():
     return json.dumps(result)
 
 
-@app.route('/page_res_bought', methods=['GET', 'POST'])
+@app.route('/my_res_donate', methods=['GET', 'POST'])
 @login_required
-def page_res_bought():
+def my_res_donate():
     result = []
     certs = Certs.query.filter(
         Certs.payer_id == current_user.id, Certs.transfer_id == None
@@ -481,18 +483,18 @@ def download_res(resid, filename=None):
             )
     abort(404)
 
-@app.route('/trace_buy/<resid>', methods=['GET', 'POST'])
+@app.route('/trace_donate/<resid>', methods=['GET', 'POST'])
 @login_required
-def trace_buy(resid):
-    certs = Certs.query.filter(Certs.resource_id==resid, Certs.value!=-1).all()
+def trace_donate(resid):
+    certs = Certs.query.filter(Certs.resource_id==resid).all()
     result = []
     for cert in certs:
+        payer = User.query.filter_by(id==cert.payer_id).first();
         result.append(
             {
                 'time': cert.timestamp_pay,
-                'payer': cert.getUserOf(cert.payer_id),
+                'payer': payer if payer is not None else "illegal user",
                 'receiver': current_user,
-                'type': 'buy',
                 'value': cert.value
             }
         )
@@ -501,47 +503,10 @@ def trace_buy(resid):
         title='trace_record',
         res_title = Resource.query.filter_by(id=resid).first().title,
         result=result,
-        type='buy',
+        enumerate=enumerate,
         userid=current_user.id,
         resid=resid
     )
-
-@app.route('/trace_transfer/<resid>', methods=['GET', 'POST'])
-@app.route('/trace_transfer/<resid>/<userid>', methods=['GET', 'POST'])
-@login_required
-def trace_transfer(resid, userid=None):
-    certs = Certs.query.filter(Certs.resource_id==resid, Certs.payer_id==userid, Certs.transfer_id!=None).all()
-    # result = [cert.as_dict() for cert in certs]
-    # return json.dumps(result)
-    result = []
-    for cert in certs:
-        result.append(
-            {
-                'resid': cert.resource_id,
-                'time': cert.timestamp_trans,
-                'payer': cert.getUserOf(cert.transfer_id),
-                'receiver': cert.getUserOf(cert.payer_id),
-                'type': 'trans',
-                'value': 0
-            }
-        )
-    return render_template(
-        'trace/trace.html',
-        title='trace_record',
-        res_title = Resource.query.filter_by(id=resid).first().title,
-        result=result,
-        type='trans',
-        userid=userid,
-        username=User.query.filter_by(id=userid).first().username,
-        resid=resid
-    )
-
-@app.route('/trace_transfer_up/<resid>/<userid>', methods=['GET', 'POST'])
-@login_required
-def trace_transfer_up(resid, userid):
-    certs = Certs.query.filter(Certs.resource_id==resid, Certs.payer_id==userid, Certs.transfer_id!=None).all()
-    result = [cert.as_dict() for cert in certs]
-    return json.dumps(result)
 
 @app.route('/code')
 def get_capture_code():

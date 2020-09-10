@@ -79,7 +79,6 @@ class Resource(db.Model):
     def paid_nums(self):
         return Certs.query.filter_by(
             resource_id=self.id,
-            transfer_id=None
         ).count()
             
 
