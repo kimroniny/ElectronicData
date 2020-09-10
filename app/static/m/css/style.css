@@ -20328,7 +20328,7 @@ code {
 
 /* Forms */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .input-group-append,
@@ -21061,7 +21061,7 @@ dl li {
 }
 
 .auth form .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .auth form .form-group label {
@@ -21907,3 +21907,8 @@ dl li {
 }
 
 /*# sourceMappingURL=maps/style.css.map */
+
+/* about verify code */
+.verify_code {
+  margin-top: 1rem;
+}

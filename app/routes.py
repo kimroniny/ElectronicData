@@ -1,13 +1,16 @@
 from app import app, db
 from app.forms import *
-from flask import render_template, flash, redirect, url_for, request, send_from_directory, abort, make_response, session
-from app.models import User, Resource, Certs
-from flask_login import current_user, login_user, logout_user, login_required
-from datetime import datetime
-from app.email import send_password_reset_email
-from functools import wraps
-from werkzeug.utils import secure_filename
 from app.capture import *
+from app.email import send_password_reset_email
+from app.models import User, Resource, Certs
+
+from flask import render_template, flash, redirect, url_for, request, send_from_directory, abort, make_response, session
+from flask_login import current_user, login_user, logout_user, login_required
+
+from werkzeug.utils import secure_filename
+
+from datetime import datetime
+from functools import wraps
 from io import BytesIO
 import json, os, pathlib
 

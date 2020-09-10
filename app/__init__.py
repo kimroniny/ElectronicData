@@ -9,13 +9,26 @@ import os
 import logging
 
 
+# 创建app
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# 把app注册给SQLAlchemy
+# 数据库操作
 db = SQLAlchemy(app)
+
+# 把app和db注册给Migrate
+# 数据库版本迁移工具
 migrate = Migrate(app, db)
+
+# 把app注册给LoginManager
+# 登陆管理
 login = LoginManager(app)
 login.login_view = 'login'
 login.login_message = '0,请登录'
+
+# 把app注册给Mail
+# 邮件管理
 mail = Mail(app)
 
 from app import routes, models, errors
