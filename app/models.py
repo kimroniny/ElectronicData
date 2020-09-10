@@ -78,6 +78,7 @@ class Resource(db.Model):
     title = db.Column(db.String(60))
     body = db.Column(db.String(200))
     price = db.Column(db.Integer, default=1)
+    endTime = db.Column(db.DateTime)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     updatetime = db.Column(db.DateTime)
     filename = db.Column(db.String(100))
@@ -104,6 +105,7 @@ class Resource(db.Model):
             'title': self.title,
             'desp': self.body,
             'price': self.price,
+            'endTime': self.endTime,
             'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
             'issuer': self.issuer.username
         }

@@ -1,41 +1,89 @@
-2019-11-03 09:11:26,574 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-03 09:13:43,582 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-03 20:07:48,968 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 09:06:31,810 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 09:07:44,749 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 09:17:15,365 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 09:42:19,038 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 11:33:23,253 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 11:33:36,041 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 11:34:55,012 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 14:03:18,003 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 16:54:56,847 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 20:02:29,161 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 20:15:25,968 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 21:25:40,459 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-04 21:48:08,119 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic\app\__init__.py:35]
-2019-11-05 10:46:39,273 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-05 23:51:07,874 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-05 23:54:35,548 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 09:53:38,355 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 10:33:01,462 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 10:34:16,803 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 10:34:54,070 INFO: Electronic startup [in e:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 10:50:02,611 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 11:00:42,237 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 20:15:17,563 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:35]
-2019-11-06 22:40:28,883 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:36]
-2019-11-06 22:40:36,449 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\electronic_ui\app\__init__.py:36]
-2019-11-07 11:13:48,804 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\repo\electronic\app\__init__.py:36]
-2019-11-07 11:14:50,669 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\repo\electronic\app\__init__.py:36]
-2019-11-07 11:28:34,141 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\repo\electronic\app\__init__.py:36]
-2019-11-07 11:28:59,261 INFO: Electronic startup [in E:\contracts\FundingBasedOnBlockchain\repo\electronic\app\__init__.py:36]
-2020-09-10 14:51:12,451 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 14:51:58,916 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 14:52:30,904 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 15:04:48,200 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 15:07:10,260 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 16:04:27,463 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 16:24:49,080 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 16:25:40,650 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-10 16:26:07,628 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-10 22:02:53,118 ERROR: Exception on /issue [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
+    res = self._query(query)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
+    db.query(q)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1054, "Unknown column 'endTime' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 89, in issue
+    db.session.commit()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 1027, in commit
+    self.transaction.commit()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 494, in commit
+    self._prepare_impl()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 473, in _prepare_impl
+    self.session.flush()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1137, in _emit_insert_statements
+    statement, params
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1253, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1473, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
+    res = self._query(query)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
+    db.query(q)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.OperationalError: (MySQLdb._exceptions.OperationalError) (1054, "Unknown column 'endTime' in 'field list'")
+[SQL: INSERT INTO resource (title, body, price, `endTime`, timestamp, updatetime, filename, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('测试项目', '啊实打实大苏打', 10000, datetime.datetime(2020, 9, 10, 21, 38), datetime.datetime(2020, 9, 10, 14, 2, 53, 115530), None, '于雷.jpg', 1)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
+2020-09-10 22:03:30,409 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-10 22:03:36,955 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]

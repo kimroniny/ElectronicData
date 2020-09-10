@@ -81,6 +81,7 @@ def issue():
             title=form.title.data,
             price=form.price.data,
             body=form.body.data,
+            endTime=form.endTime.data,
             issuer=current_user,
             filename=filename
         )

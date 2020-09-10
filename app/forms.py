@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from app.models import User, Resource
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField,HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField,HiddenField, DateTimeField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange
 from flask_wtf.file import FileField, FileRequired
-
+import datetime
 
 class LoginForm(FlaskForm):
     username = StringField('用户名', validators=[DataRequired()])
@@ -50,10 +50,11 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 class EditResForm(FlaskForm):
-    title = StringField('题目', validators=[DataRequired()])
-    body = TextAreaField('描述', validators=[DataRequired()])
-    price = IntegerField('价格', validators=[DataRequired()])
-    resfile = FileField('资源文件', validators=[])
+    title = StringField('标题', validators=[DataRequired()])
+    body = TextAreaField('详细描述', validators=[DataRequired()])
+    price = IntegerField('目标金额', validators=[DataRequired()])
+    endTime = DateTimeField('截止时间', validators=[DataRequired()])
+    resfile = FileField('证明文件', validators=[])
     submit = SubmitField('确认')
     resid = HiddenField()
 
@@ -84,10 +85,11 @@ class ResetPasswordForm(FlaskForm):
 
 
 class ResIssueForm(FlaskForm):
-    title = StringField('题目', validators=[DataRequired()])
-    body = TextAreaField('描述', validators=[DataRequired()])
-    price = IntegerField('价格', validators=[DataRequired()])
-    resfile = FileField('资源文件', validators=[FileRequired()])
+    title = StringField('标题', validators=[DataRequired()])
+    body = TextAreaField('详细描述', validators=[DataRequired()])
+    price = IntegerField('募捐金额', validators=[DataRequired()])
+    endTime = DateTimeField('截止时间', validators=[DataRequired()], format="%Y/%m/%d %H:%M")
+    resfile = FileField('证明文件', validators=[FileRequired()])
     submit = SubmitField('确定提交')
 
     def validate_price(self, price):
@@ -114,8 +116,6 @@ class ChargeForm(FlaskForm):
     amount = IntegerField('充值金额', validators=[NumberRange(1, 1000), DataRequired()])
     paypwd = PasswordField('密码', validators=[DataRequired()])
     submit = SubmitField('充值')
-
-
 
 class WithdDraw(FlaskForm):
     amount = IntegerField('提现金额', validators=[NumberRange(1, 1000), DataRequired()])
