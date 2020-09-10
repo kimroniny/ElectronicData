@@ -2,188 +2,212 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Responsive Admin Dashboard Template" />
-  <meta name="keywords" content="admin,dashboard" />
-  <meta name="author" content="skcats" />
-  <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Responsive Admin Dashboard Template" />
+    <meta name="keywords" content="admin,dashboard" />
+    <meta name="author" content="skcats" />
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  <!-- Title -->
-  <title>基于区块链的慈善募捐系统</title>
+    <!-- Title -->
+    <title>基于区块链的慈善募捐系统</title>
 
-  <!-- Styles -->
+    <!-- Styles -->
 
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/icomoon/style.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/uniform/css/default.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/switchery/switchery.min.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" />
+    <!-- <link href="{{url_for('static', filename='e/plugins/bootstrap4/css/bootstrap.min.css')}}" rel="stylesheet" /> -->
+    <link href="{{url_for('static', filename='e/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/plugins/icomoon/style.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/plugins/uniform/css/default.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/plugins/switchery/switchery.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='e/plugins/toastr/toastr.min.css')}}" rel="stylesheet" />
+    </script>
 
-  <!-- Theme Styles -->
-  <link href="{{url_for('static', filename='e/css/ecaps.min.css')}}" rel="stylesheet" />
-  <link href="{{url_for('static', filename='e/css/custom.css')}}" rel="stylesheet" />
+    <!-- Theme Styles -->
+    <link href="{{url_for('static', filename='e/css/ecaps.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='e/css/custom.css')}}" rel="stylesheet" />
 
-  <style type="text/css">
-    hr {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
+    <style type="text/css">
+        hr {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .lead {
+            margin-bottom: 5px;
+        }
+        
+        .panel {
+            padding: 10px;
+        }
+    </style>
+    {% block styles %} {% endblock styles %}
 
-    .lead {
-      margin-bottom: 5px;
-    }
-
-    .panel {
-      padding: 10px;
-    }
-  </style>
-  {% block styles %} {% endblock styles %}
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  <!-- Javascripts -->
-  <script src="{{url_for('static', filename='e/plugins/jquery/jquery-3.1.0.min.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/uniform/js/jquery.uniform.standalone.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/switchery/switchery.min.js')}}"></script>
-  <script src="{{url_for('static', filename='e/js/ecaps.min.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/moment/moment.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/moment/moment-with-locale.js')}}"></script>
-  <script src="{{url_for('static', filename='e/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
-  
-  {% block script %} {% endblock script %}
+    <!-- Javascripts -->
+    <script src="{{url_for('static', filename='e/plugins/jquery/jquery-3.1.0.min.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='e/plugins/bootstrap4/js/bootstrap.min.js')}}"></script> -->
+    <script src="{{url_for('static', filename='e/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/uniform/js/jquery.uniform.standalone.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/switchery/switchery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='e/js/ecaps.min.js')}}"></script>
+    <script src="{{url_for('static', filename='e/js/pages/ui-notifications.js')}}"></script>
+    <script src="{{url_for('static', filename='e/js/pages/ui-modals.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/moment/moment.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/moment/moment-with-locale.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+    <script src="{{url_for('static', filename='e/plugins/toastr/toastr.min.js')}}"></script>
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+
+    {% block script %} {% endblock script %}
 </head>
 
 <body>
-  <!-- Page Container -->
-  <div class="page-container">
-    <!-- Page Sidebar -->
-    <div class="page-sidebar">
-      <a class="logo-box" href="{{ url_for('index') }}">
-        <span>Charity</span>
-        <i class="icon-close" id="sidebar-toggle-button-close"></i>
-      </a>
-      <div class="page-sidebar-inner">
-        <div class="page-sidebar-menu">
-          <ul class="accordion-menu">
-            <li>
-              <a href="{{ url_for('user', username=current_user.username) }}">
-                <span>当前用户：
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        <div class="page-sidebar">
+            <a class="logo-box" href="{{ url_for('index') }}">
+                <span>Charity</span>
+                <i class="icon-close" id="sidebar-toggle-button-close"></i>
+            </a>
+            <div class="page-sidebar-inner">
+                <div class="page-sidebar-menu">
+                    <ul class="accordion-menu">
+                        <li>
+                            <a href="{{ url_for('user', username=current_user.username) }}">
+                                <span>当前用户：
                   <span style="
                         color: #63cb89;
                         font-weight: bolder;
                         font-size: large;
                       ">
                     {{ current_user.username }}</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('index') }}">
-                <i class="menu-icon icon-home4"></i><span>首页</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('user', username=current_user.username) }}">
-                <i class="menu-icon icon-inbox"></i><span>我的信息</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('page_res_issue') }}">
-                <i class="menu-icon icon-inbox"></i><span>我的募捐项目</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('page_res_bought') }}">
-                <i class="menu-icon icon-inbox"></i><span>我捐赠的项目</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('page_res_transfer') }}">
-                <i class="menu-icon icon-inbox"></i><span>已转让【废弃】</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('charge') }}">
-                <i class="menu-icon icon-inbox"></i><span>充值</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('withdraw') }}">
-                <i class="menu-icon icon-inbox"></i><span>提现</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('logout') }}">
-                <i class="menu-icon icon-inbox"></i><span>退出</span>
-              </a>
-            </li>
-          </ul>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('index') }}">
+                                <i class="menu-icon icon-home4"></i><span>首页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('user', username=current_user.username) }}">
+                                <i class="menu-icon icon-inbox"></i><span>我的信息</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('page_res_issue') }}">
+                                <i class="menu-icon icon-inbox"></i><span>我的募捐项目</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('page_res_bought') }}">
+                                <i class="menu-icon icon-inbox"></i><span>我捐赠的项目</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('page_res_transfer') }}">
+                                <i class="menu-icon icon-inbox"></i><span>已转让【废弃】</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('charge') }}">
+                                <i class="menu-icon icon-inbox"></i><span>充值</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('withdraw') }}">
+                                <i class="menu-icon icon-inbox"></i><span>提现</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('logout') }}">
+                                <i class="menu-icon icon-inbox"></i><span>退出</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- /Page Sidebar -->
+        <!-- /Page Sidebar -->
 
-    <!-- Page Content -->
-    <div class="page-content">
-      <!-- Page Header -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Header -->
 
-      <!-- /Page Header -->
-      <!-- Page Inner -->
-      <div class="page-inner">
-        <div id="main-wrapper">
-          <div class="row">
-            <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-              {% with messages = get_flashed_messages() %} {% if messages %}
-              <ul style="list-style-type: none">
-                {% for message in messages %}
-                <li>
-                  {% if message[0]=='0' %}
-                  <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <!-- /Page Header -->
+            <!-- Page Inner -->
+            <div class="page-inner">
+                <div id="main-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-10 col-lg-offset-1">
+                            {% with messages = get_flashed_messages() %} {% if messages %}
+                            <ul style="list-style-type: none">
+                                {% for message in messages %}
+                                <li>
+                                    {% if message[0]=='0' %}
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">×</span>
-                    </button>
-                    {{message[2:]}}
-                  </div>
-                  {% else %}
+                    </button> {{message[2:]}}
+                                    </div>
+                                    {% else %}
 
-                  <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">×</span>
-                    </button>
-                    {{message[2:]}}
-                  </div>
-                  {% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-              {% endif %} {% endwith %}
+                    </button> {{message[2:]}}
+                                    </div>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %} {% endwith %}
+                        </div>
+
+                        {% block content %} {% endblock content %}
+                    </div>
+                    <!-- Row -->
+                </div>
+                <!-- Main Wrapper -->
             </div>
 
-            {% block content %} {% endblock content %}
-          </div>
-          <!-- Row -->
+            <!-- /Page Inner -->
+            <div class="page-footer">
+                <p>Powered By Kimroniny</p>
+            </div>
         </div>
-        <!-- Main Wrapper -->
-      </div>
-
-      <!-- /Page Inner -->
-      <div class="page-footer">
-        <p>Powered By Kimroniny</p>
-      </div>
+        <!-- /Page Content -->
     </div>
-    <!-- /Page Content -->
-  </div>
-  <!-- /Page Container -->
+    <!-- /Page Container -->
 </body>
 
 </html>

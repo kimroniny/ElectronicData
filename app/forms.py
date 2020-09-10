@@ -66,12 +66,6 @@ class EditResForm(FlaskForm):
         if p <= 0:
             raise ValidationError('Please input a positive Integer')
 
-class PostForm(FlaskForm):
-    post = TextAreaField('Say something', validators=[
-        DataRequired(), Length(min=1, max=140)])
-    submit = SubmitField('Submit')
-
-
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Request Password Reset')
@@ -111,6 +105,13 @@ class ResTransferForm(FlaskForm):
         if user is None:
             raise ValidationError('用户名无效，请确认是否输入正确')
 
+class ResDonateForm(FlaskForm):
+    """
+    捐款表单
+    """
+    res_id = HiddenField()
+    money = IntegerField("金额", validators=[DataRequired()])
+    submit = SubmitField("确认转账")
 
 class ChargeForm(FlaskForm):
     amount = IntegerField('充值金额', validators=[NumberRange(1, 1000), DataRequired()])

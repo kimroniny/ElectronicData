@@ -144,6 +144,26 @@ def res_transfer():
 
     return json.dumps(result)
 
+# 捐款
+@app.route('/res_donate', methods=['POST'])
+@login_required
+def res_donate():
+    result = {
+        'code': 0,
+        'msg': 'success',
+    }
+    if request.method == "POST":
+        money, password, resid = request.form['money'], request.form['password'], request.form['resid']
+        '''
+        这里是不是可以调用合约了
+        '''
+    else:
+        result['code'] = 101
+        result['msg'] = "REQUEST METHOD ERROR, only support POST"
+
+    return json.dumps(result)
+
+
 # 购买资源
 @app.route('/res_buy/<resid>', methods=['GET', 'POST'])
 @login_required
@@ -162,19 +182,14 @@ def res_buy(resid):
 @app.route('/res_detail/<resid>', methods=['GET'])
 @login_required
 def res_detail(resid):
-    resTransferForm = ResTransferForm(res_id=resid)
     resource = Resource.query.filter_by(id=resid).first_or_404()
-    issued = 1 == Resource.query.filter_by(
-        id=resid, user_id=current_user.id).count()
-    bought = 1 == Certs.query.filter_by(
-        resource_id=resid, payer_id=current_user.id, transfer_id=None).count()
+    bought = 1 <= Certs.query.filter_by(
+        resource_id=resid, payer_id=current_user.id).count() # 有可能捐赠多笔
     return render_template(
         'detail/res.html',
-        title='resource detail',
+        title='项目详情',
         res=resource,
-        issued=issued,
         bought=bought,
-        transForm=resTransferForm
     )
 
 
