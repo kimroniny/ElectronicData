@@ -28,33 +28,21 @@ class Certs(db.Model):
     __tablename__ = 'certs'
 
     id = db.Column(db.Integer, primary_key=True)
-    resource_id = db.Column(db.Integer, db.ForeignKey('resource.id', ondelete='CASCADE'))
-    payer_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
-    transfer_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
-    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    timestamp_trans = db.Column(db.DateTime)
-    value = db.Column(db.Integer, default=getPrice)
-
-    def getUserOf(self, user_id):
-        return User.query.filter_by(id=user_id).first_or_404()
+    resource_id = db.Column(db.Integer, db.ForeignKey('resource.id', ondelete='CASCADE')) # 募捐项目的id
+    payer_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')) # 捐款人用户的id
+    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
+    value = db.Column(db.Integer, default=0) # 捐款金额
 
     def format_timestamp_pay(self):
         return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
 
-    def format_timestamp_trans(self):
-        return self.timestamp_trans.strftime('%Y-%m-%d %H:%M:%S')
-
-    def transfer_to(self, userid):
-        self.transfer_id = userid
-        self.timestamp_trans = datetime.utcnow()
-
     def __repr__(self):
-        return '<Certs {}: resource_id, {}; payer_id, {}; transfer_id, {}; value, {}>'.format(
+        return '<Certs {}: resource_id, {}; payer_id, {}; value, {}; time: {}>'.format(
             self.id, 
             self.resource_id,
             self.payer_id,
-            self.transfer_id,
-            self.value
+            self.value,
+            self.timestamp_pay
             )
     
     def as_dict(self):
@@ -63,13 +51,8 @@ class Certs(db.Model):
             'resource_id': self.resource_id,
             'payer_id': self.transfer_id,
             'timestamp_pay': self.transtamp_pay,
-            'timestamp_trans': self.transtamp_trans,
             'value': self.value
         }
-
-    # 指明
-    # payer = db.relationship('User', foreign_keys=[resource_id])
-    # transfer = db.relationship('User', foreign_keys=[transfer_id])
 
 
 class Resource(db.Model):
@@ -154,15 +137,6 @@ class User(UserMixin, db.Model):
     
     def buy_res(self, resource):
         self.res_bought.append(resource)
-    
-    def obtain_cert(self, cert: Certs):
-        # 首先需要添加新的购买记录
-        # self.res_bought.append(Resource.query.filter_by(id=cert.resource_id).first())
-        # 转让源点人的购买记录要加上转让终点人的id
-        cert.transfer_to(self.id)
-        # 创建新的购买记录，但是价格设为-1，代表当前凭证是转让得来的
-        new_cert = Certs(resource_id=cert.resource_id, payer_id=self.id, value=-1, transfer_id=None)
-        return new_cert
         
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
