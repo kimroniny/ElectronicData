@@ -78,6 +78,7 @@ class Resource(db.Model):
     title = db.Column(db.String(60))
     body = db.Column(db.String(200))
     price = db.Column(db.Integer, default=1)
+    has_price = db.Column(db.Integer, default=0)
     endTime = db.Column(db.DateTime)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     updatetime = db.Column(db.DateTime)
@@ -97,7 +98,7 @@ class Resource(db.Model):
             resource_id=self.id,
             transfer_id=None
         ).count()
-        
+            
 
     def as_dict(self):
         return {
