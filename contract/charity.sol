@@ -14,6 +14,7 @@ contract Electronic {
         uint endTime;
         uint targetMoney;
         uint hasMoney;
+        string fileHash;
         CharityType status;
         address payable owner;
     }
@@ -67,13 +68,14 @@ contract Electronic {
         uint endTime,
         uint targetMoney,
         uint hasMoney,
+        string fileHash,
         CharityType status,
         address payable indexed owner
     );
-    function createCharity(uint endTime, uint targetMoney) userExist(msg.sender) public {
-        require(block.timestamp < endTime, "endTime must be larger than startTime");
-        require(targetMoney > 0, "targetMoney must be positive integer");
-        Charity memory charity = Charity(charities.length, charitiesOfUser[msg.sender].length, block.timestamp, endTime, targetMoney, 0, CharityType.PENDING, msg.sender);
+    function createCharity(uint endTime, uint targetMoney, string memory fileHash) userExist(msg.sender) public {
+        require(block.timestamp < endTime, "截止时间应晚于当前时间");
+        require(targetMoney > 0, "目标金额必须是正整数");
+        Charity memory charity = Charity(charities.length, charitiesOfUser[msg.sender].length, block.timestamp, endTime, targetMoney, 0, fileHash, CharityType.PENDING, msg.sender);
         charities.push(charity);
         charitiesOfUser[msg.sender].push(charity);
         emit CharityInfo(
@@ -83,6 +85,7 @@ contract Electronic {
             charity.endTime,
             charity.targetMoney,
             charity.hasMoney,
+            charity.fileHash,
             charity.status,
             charity.owner
         );
@@ -98,11 +101,11 @@ contract Electronic {
         address donator
     );
     function donate(uint charityId) userExist(msg.sender) payable public{
-        require(charityId < charities.length);
-        require(charities[charityId].status == CharityType.PENDING); // 还在募捐状态
-        require(charities[charityId].hasMoney < charities[charityId].targetMoney); // fund is less than ta
-        require(charities[charityId].endTime > block.timestamp); // expired
-        require(charities[charityId].owner != msg.sender); // sender can not be equal to owner
+        require(charityId < charities.length, "超出索引最大范围");
+        require(charities[charityId].status == CharityType.PENDING, "募捐项目状态不是PENDING状态"); // 还在募捐状态
+        require(charities[charityId].hasMoney < charities[charityId].targetMoney, "募捐项目已募捐到目标金额"); // fund is less than ta
+        require(charities[charityId].endTime > block.timestamp, "募捐项目已到截止时间"); // expired
+        require(charities[charityId].owner != msg.sender, "募捐项目的发起人不可以捐款"); // sender can not be equal to owner
         require(msg.value > 0);
         
         // 计算有效捐款
@@ -139,7 +142,7 @@ contract Electronic {
             fund.money,
             fund.timestamp,
             fund.donator
-        )
+        );
     }
 
     function updateCharityMoney(uint charityId, uint money) private {
@@ -164,16 +167,36 @@ contract Electronic {
         return charitiesOfUser[addr].length;
     }
 
-    function getCharityById(uint id) view public returns (uint, uint, uint, uint, uint, CharityType, address){
-        require(id < charities.length);
+    function getCharityById(uint id) view public returns (uint, uint, uint, uint, uint, uint, string, CharityType, address){
+        require(id < charities.length, "超出索引最大范围");
         Charity memory charity = charities[id];
-        return (charity.idInUser, charity.startTime, charity.endTime, charity.targetMoney, charity.hasMoney, charity.status, charity.owner);
+        return (
+            charity.id,
+            charity.idInUser,
+            charity.startTime,
+            charity.endTime,
+            charity.targetMoney,
+            charity.hasMoney,
+            charity.fileHash,
+            charity.status,
+            charity.owner
+        );
     }
 
-    function getCharityBySomeoneId(address addr, uint id) userExist(addr) view public returns (uint, uint, uint, uint, CharityType, address) {
-        require(id < charitiesOfUser[addr].length);
+    function getCharityBySomeoneId(address addr, uint id) userExist(addr) view public returns (uint, uint, uint, uint, uint, uint, string, CharityType, address) {
+        require(id < charitiesOfUser[addr].length, "超出索引最大范围");
         Charity memory charity = charitiesOfUser[addr][id];
-        return (charity.startTime, charity.endTime, charity.targetMoney, charity.hasMoney, charity.status, charity.owner);
+        return (
+            charity.id,
+            charity.idInUser,
+            charity.startTime,
+            charity.endTime,
+            charity.targetMoney,
+            charity.hasMoney,
+            charity.fileHash,
+            charity.status,
+            charity.owner
+        );
     }
 
     function getFundNumberBySomeoneAddr(address addr) userExist(addr) view public returns (uint) {
@@ -186,15 +209,23 @@ contract Electronic {
         }
     }
 
-    function getFundByIndexWithCharityId(uint charityId, uint index) view public returns (uint, uint, uint, address){
-        require(charityId < charities.length);
-        require(index < fundsOfCharity[charityId].length);
+    function getFundByIndexWithCharityId(uint charityId, uint index) view public returns (uint, uint, uint, uint, uint, uint, address){
+        require(charityId < charities.length, "超出索引最大范围");
+        require(index < fundsOfCharity[charityId].length, "超出索引最大范围");
         Fund memory fund = fundsOfCharity[charityId][index];
-        return (fund.charityId, fund.money, fund.timestamp, fund.donator);
+        return (
+            fund.id, 
+            fund.charityId,
+            fund.idInUser,
+            fund.idInCharity,
+            fund.money,
+            fund.timestamp,
+            fund.donator
+        );
     }
 
     function getFundById(uint fundId) view public returns (uint, uint, uint, uint, uint, uint, address){
-        require(fundId < funds.length);
+        require(fundId < funds.length, "超出索引最大范围");
         Fund memory fund = funds[fundId];
         return (
             fund.id, 
@@ -204,7 +235,7 @@ contract Electronic {
             fund.money,
             fund.timestamp,
             fund.donator
-        )
+        );
     }
 
     fallback () external payable {

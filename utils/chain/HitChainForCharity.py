@@ -24,7 +24,7 @@ class CharitySdk(HitSdk):
         )
         return addr
     
-    def createCharity(self, endTime, money, owner):
+    def createCharity(self, endTime, money, fileHash, owner):
         """
         先创建募捐项目
         然后从链上获取该项目的信息
@@ -33,7 +33,7 @@ class CharitySdk(HitSdk):
             owner = self.w3.toChecksumAddress(owner)
             _, eventArgsInfo, err = self.operate(
                 func_name='createCharity',
-                func_args=[endTime, money], # TODO: 增加文件的哈希值
+                func_args=[endTime, money, fileHash], # TODO: 增加文件的哈希值
                 exec_type=ContractExecType.CONTRACT_TRAN,
                 args={'from': owner},
                 event_names=['CharityInfo']
@@ -80,6 +80,7 @@ class CharitySdk(HitSdk):
             uint endTime,
             uint targetMoney,
             uint hasMoney,
+            string fileHash,
             CharityType status,
             address payable indexed owner
 
@@ -96,6 +97,7 @@ class CharitySdk(HitSdk):
             'endTime',
             'targetMoney',
             'hasMoney',
+            'fileHash'
             'status',
             'owner',
         ]

@@ -52,6 +52,22 @@ def index():
         'index', page=resources.prev_num) if resources.has_prev else None
     return render_template('index.html', title='首页', resources=resources.items, next_url=next_url, prev_url=prev_url)
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        if session.get('image').lower() != form.verify_code.data.lower():
+            flash('0,验证码输入错误')
+            return render_template('sign/register.html', title='Register', form=form)
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('1,注册成功')
+        return redirect(url_for('login'))
+    return render_template('sign/register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,6 +84,10 @@ def login():
         return redirect(url_for('index'))
     return render_template('sign/login.html', title='Sign In', form=form)
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 # 发布新的数据资源
 @app.route('/issue', methods=['GET', 'POST'])
@@ -99,50 +119,6 @@ def issue():
         return redirect(url_for('index'))
     return render_template('issue/res.html', title="issue resource", form=form)
 
-# 转让
-@app.route('/res_transfer', methods=['POST'])
-@login_required
-def res_transfer():
-    result = {
-        'code': 0,
-        'msg': '',
-    }
-    if request.method == "POST":
-        username, password, resid = request.form['username'], request.form['password'], request.form['resid']
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            result['code'] = 1
-            result['msg'] = 'transfer user "{}" not exists'.format(username)
-        else:
-            if not current_user.check_password(password):
-                result['code'] = 1
-                result['msg'] = 'password is wrong'.format(username)
-            else:
-                cert = Certs.query.filter_by(
-                    resource_id=resid,
-                    payer_id=current_user.id,
-                    transfer_id=None).first()
-                if not cert:
-                    result['code'] = 1
-                    result['msg'] = 'you don`t have this resource'
-                else:
-                    to_cert = Certs.query.filter_by(
-                        resource_id=resid,
-                        payer_id=user.id,
-                        transfer_id=None
-                    ).first()
-                    if to_cert:
-                        # if the to_user have the data, you cannot transfer this res to him/her
-                        result['code'] = 1
-                        result['msg'] = '用户 "{}" 已经拥有该数据，所以不能再转让给TA'.format(
-                            username)
-                    else:
-                        new_cert = user.obtain_cert(cert)
-                        db.session.add(new_cert)
-                        db.session.commit()
-                        result['msg'] = '资源转让成功 !!!'
-
-    return json.dumps(result)
 
 # 捐款
 @app.route('/res_donate', methods=['POST'])
@@ -164,20 +140,6 @@ def res_donate():
     return json.dumps(result)
 
 
-# 购买资源
-@app.route('/res_buy/<resid>', methods=['GET', 'POST'])
-@login_required
-def res_buy(resid):
-    resource = Resource.query.filter_by(id=resid).first_or_404()
-    if resource:
-        if resource.price > current_user.balance:
-            flash('0,您的余额不足 !!!')
-        else:
-            current_user.buy_res(resource)
-            db.session.commit()
-            flash('1,购买成功，您已经成功购买该资源')
-    return redirect(url_for('res_detail', resid=resid))
-
 # 数据资源详情
 @app.route('/res_detail/<resid>', methods=['GET'])
 @login_required
@@ -195,10 +157,6 @@ def res_detail(resid):
     )
 
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 
 @app.route('/user/<userid>', methods=['GET', 'POST'])
@@ -225,61 +183,6 @@ def edit_profile():
                            form=form)
 
 
-@app.route('/edit_res/<resid>', methods=['GET', 'POST'])
-@login_required
-def edit_res(resid=None):
-    form = EditResForm()
-    if form.validate_on_submit():
-        res = current_user.resources.filter_by(
-            id=form.resid.data).first_or_404()
-        res.title = form.title.data
-        res.body = form.body.data
-        res.price = form.price.data
-        res.updatetime = datetime.utcnow()
-        if form.resfile.data is not None:
-            resfile = form.resfile.data
-            res.filename = resfile.filename
-        db.session.commit()
-        if form.resfile.data is not None:
-            filedir = os.path.join(app.config['RES_FILE_PATH'], str(res.id))
-            if not pathlib.Path(filedir).exists():
-                os.makedirs(filedir)
-            resfile.save(
-                os.path.join(
-                    app.config['RES_FILE_PATH'], str(res.id), res.filename
-                )
-            )
-        flash("1,资源信息已修改!!!")
-        return redirect(url_for('res_detail', resid=res.id))
-    elif request.method == 'GET':
-        res = current_user.resources.filter_by(id=resid).first_or_404()
-        form.resid.data = resid
-        form.title.data = res.title
-        form.body.data = res.body
-        form.price.data = res.price
-    return render_template(
-        'modify/res.html',
-        title='edit resource',
-        form=form
-    )
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        if session.get('image').lower() != form.verify_code.data.lower():
-            flash('0,验证码输入错误')
-            return render_template('sign/register.html', title='Register', form=form)
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('1,注册成功')
-        return redirect(url_for('login'))
-    return render_template('sign/register.html', title='Register', form=form)
 
 
 @app.route('/explore')
