@@ -33,8 +33,8 @@ class Certs(db.Model):
     timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
     value = db.Column(db.Integer, default=0) # 捐款金额
 
-    def format_timestamp_pay(self):
-        return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
+    # def format_timestamp_pay(self):
+    #     return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self):
         return '<Certs {}: resource_id, {}; payer_id, {}; value, {}; time: {}>'.format(

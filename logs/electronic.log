@@ -1,4 +1,4 @@
-2020-09-11 04:11:27,047 ERROR: Exception on /trace_donate/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-11 04:37:52,948 ERROR: Exception on /index [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,57 +14,43 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 507, in trace_donate
-    resid=resid
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 138, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 53, in index
+    return render_template('index.html', title='首页', resources=resources.items, next_url=next_url, prev_url=prev_url)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/trace/trace.html", line 30, in template
-    {% if result %} {% for idx, certin enumerate(result) %}
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 268, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 212, in parse_if
-    node.body = self.parse_statements(('name:elif', 'name:else',
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 192, in parse_for
-    self.stream.expect('name:in')
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/lexer.py", line 384, in expect
-    self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: expected token 'in', got 'enumerate'
-2020-09-11 04:15:52,136 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 04:16:13,395 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 1, in top-level template code
+    {% extends "base/base.html" %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 14, in root
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
+    "timeOut": "5000",
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 52, in block_content
+    </div>
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
+2020-09-11 04:38:30,228 ERROR: Exception on /index [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -80,6 +66,41 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 372, in my_res_donate
-    Certs.payer_id == current_user.id, Certs.transfer_id == None
-AttributeError: type object 'Certs' has no attribute 'transfer_id'
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 53, in index
+    return render_template('index.html', title='首页', resources=resources.items, next_url=next_url, prev_url=prev_url)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 14, in root
+    <div class="col-sm-12 col-lg-10 col-lg-offset-1">
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
+    "timeOut": "5000",
+  File "/home/kr/workspace/ElectronicData/app/templates/index.html", line 52, in block_content
+    </strong>
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
+2020-09-11 04:38:32,566 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]

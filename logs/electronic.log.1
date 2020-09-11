@@ -1,4 +1,4 @@
-2020-09-11 04:08:56,597 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-11 04:33:38,797 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,8 +14,8 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 194, in res_detail
-    issued=issued
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 381, in my_res_donate
+    resources=result
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
@@ -28,15 +28,14 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 1, in top-level template code
     {% extends "base/base.html" %} {% block styles %}
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
     return concat(self.root_render_func(self.new_context(vars)))
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
-  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
-    "timeOut": "5000",
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 59, in block_content
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 14, in root
     <div class="panel-body">
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 44, in root
+    padding: 10px;
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
     return __obj(*args, **kwargs)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
@@ -49,8 +48,9 @@ Traceback (most recent call last):
     endpoint, values, method=method, force_external=external
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'trace_donate' with values ['resid']. Did you forget to specify values ['userid']?
-2020-09-11 04:09:17,099 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
+2020-09-11 04:37:06,646 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 04:37:08,807 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -66,8 +66,8 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 194, in res_detail
-    issued=issued
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 381, in my_res_donate
+    resources=result
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
@@ -80,15 +80,14 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 1, in top-level template code
     {% extends "base/base.html" %} {% block styles %}
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
     return concat(self.root_render_func(self.new_context(vars)))
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
-  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
-    "timeOut": "5000",
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 59, in block_content
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 14, in root
     <div class="panel-body">
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 44, in root
+    padding: 10px;
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
     return __obj(*args, **kwargs)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
@@ -101,25 +100,5 @@ Traceback (most recent call last):
     endpoint, values, method=method, force_external=external
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'trace_donate' with values ['resid']. Did you forget to specify values ['userid']?
-2020-09-11 04:09:20,161 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 04:10:56,934 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
-2020-09-11 04:11:05,224 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 372, in my_res_donate
-    Certs.payer_id == current_user.id, Certs.transfer_id == None
-AttributeError: type object 'Certs' has no attribute 'transfer_id'
+werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
+2020-09-11 04:37:35,251 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]

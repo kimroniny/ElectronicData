@@ -20,7 +20,7 @@ def checkPayPwd(f):
     def wrapped(*args, **kwargs):
         if current_user.password_hash == None:
             flash("0,请完善支付密码")
-            return redirect('user', username=current_user.username)
+            return redirect('user', userid=current_user.id)
         else:
             return f(*args, **kwargs)
     return wrapped
@@ -201,10 +201,10 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/user/<username>')
+@app.route('/user/<userid>', methods=['GET', 'POST'])
 @login_required
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+def user(userid):
+    user = User.query.filter_by(id=userid).first_or_404()
     return render_template('detail/user.html', user=user)
 
 
@@ -217,7 +217,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('1,您的修改内容已保存')
-        return redirect(url_for('user', username=current_user.username))
+        return redirect(url_for('user', userid=current_user.id))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -369,15 +369,15 @@ def show_res_bought():
 def my_res_donate():
     result = []
     certs = Certs.query.filter(
-        Certs.payer_id == current_user.id, Certs.transfer_id == None
+        Certs.payer_id == current_user.id
     ).order_by(Certs.timestamp_pay.desc()).all()
     for cert in certs:
-        res = Resource.query.filter_by(id=cert.resource_id).first_or_404()
-        res.pay_timestamp = cert.format_timestamp_pay()
-        res.pay_price = cert.value
+        res = Resource.query.filter_by(id=cert.resource_id).first()
+        res.donate_timestamp = cert.timestamp_pay
+        res.donate_price = cert.value
         result.append(res)
     return render_template(
-        'myres/res_buy.html',
+        'myres/res_donate.html',
         resources=result
     )
 
@@ -416,7 +416,7 @@ def page_res_transfer():
         resource.pay_timestamp = cert.format_timestamp_pay()
         resource.pay_timestamp_trans = cert.format_timestamp_trans()
         resource.pay_transfer_to = User.query.filter_by(
-            id=cert.transfer_id).first().username
+            id=cert.transfer_id).first()
         result.append(resource)
     return render_template(
         'myres/res_transfer.html',

@@ -1,103 +1,94 @@
-{% extends "base/base.html" %}
+{% extends "base/base.html" %} {% block styles %}
+<style type="text/css">
+    hr {
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+</style>
+{% endblock %} {% block script %} {% endblock %} {% block content %}
 
-{% block styles %}
-    <style type="text/css">
-        hr {
-            margin-top:10px;
-            margin-bottom: 10px
-        }
-    </style>
-{% endblock  %}
 
-{% block script %}
-{% endblock  %}
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <hr />
+</div>
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <a href="{{ url_for('issue') }}" class="btn btn-success">创建募捐项目</a>
+</div>
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <hr />
+</div>
 
-{% block content %}
-
-    
-    <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-        <hr />
-    </div>
-    <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-        <a href="{{ url_for('issue') }}" class="btn btn-success">创建募捐项目</a>
-    </div>
-    <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-        <hr />
-    </div>
-    
-    {% if resources %}
-        {% for resource in resources %}
-        <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-                <div class="panel panel-white">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img alt="user profile image" class="user-profile-image" src="{{ resource.avatar(128) }}" />
-                            </div>
-                            <div class="col-md-10"> 
-                                <p class="lead">
-                                    <a href="{{ url_for('res_detail', resid=resource.id) }}">{{resource.title}}</a>
-                                </p>
-                                <p>{{ resource.body }}</p>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-2">
-                                发布人：
-                                <a href="{{ url_for('user', username=resource.issuer.username) }}">{{resource.issuer.username}}</a>
-                            </div>
-                            <div class="col-md-4">
-                                发布时间：{{resource.timestamp}}
-                            </div>
-                            <div class="col-md-3">
-                                已捐金额：{{resource.has_price}}
-                            </div>
-                            <div class="col-md-3">
-                                目标金额(ED)：
-                                <strong>
+{% if resources %} {% for resource in resources %}
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <div class="panel panel-white">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img alt="user profile image" class="user-profile-image" src="{{ resource.avatar(128) }}" />
+                </div>
+                <div class="col-md-10">
+                    <p class="lead">
+                        <a href="{{ url_for('res_detail', resid=resource.id) }}">{{resource.title}}</a>
+                    </p>
+                    <p>{{ resource.body }}</p>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2">
+                    发布人：
+                    <a href="{{ url_for('user', userid=resource.issuer.id) }}">{{resource.issuer.username}}</a>
+                </div>
+                <div class="col-md-4">
+                    发布时间：{{resource.timestamp}}
+                </div>
+                <div class="col-md-3">
+                    已捐金额：{{resource.has_price}}
+                </div>
+                <div class="col-md-3">
+                    目标金额(ED)：
+                    <strong>
                                         {{resource.price}}
                                 </strong>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
         </div>
-            
-        {% endfor %}
-        <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-        <div class="row">
-            <div class="col-md-3"></div>
-            {% if prev_url and next_url %}
-            <div class="col-md-2">
-                <a href="{{ prev_url }}" class="btn btn-primary btn-rounded">last page</a>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-2">
-                <a href="{{ next_url }}" class="btn btn-primary btn-rounded">next page</a>
-            </div>
-           
-            {% elif prev_url %}
-            <div class="col-md-2">
-                <a href="{{ prev_url }}" class="btn btn-primary btn-rounded">last page</a>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-2">
-                <a href="{{ next_url }}" class="btn btn-primary btn-rounded" style="background-color: darkgray!important; border-color: darkgray!important;">next page</a>
-            </div>
-            {% elif next_url %}
-            <div class="col-md-2">
-                <a href="{{ prev_url }}" class="btn btn-primary btn-rounded" style="background-color: darkgray!important; border-color: darkgray!important;">
+    </div>
+</div>
+
+{% endfor %}
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <div class="row">
+        <div class="col-md-3"></div>
+        {% if prev_url and next_url %}
+        <div class="col-md-2">
+            <a href="{{ prev_url }}" class="btn btn-primary btn-rounded">last page</a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <a href="{{ next_url }}" class="btn btn-primary btn-rounded">next page</a>
+        </div>
+
+        {% elif prev_url %}
+        <div class="col-md-2">
+            <a href="{{ prev_url }}" class="btn btn-primary btn-rounded">last page</a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <a href="{{ next_url }}" class="btn btn-primary btn-rounded" style="background-color: darkgray!important; border-color: darkgray!important;">next page</a>
+        </div>
+        {% elif next_url %}
+        <div class="col-md-2">
+            <a href="{{ prev_url }}" class="btn btn-primary btn-rounded" style="background-color: darkgray!important; border-color: darkgray!important;">
                     last page
                 </a>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-2">
-                <a href="{{ next_url }}" class="btn btn-primary btn-rounded">next page</a>
-            </div>
-            {% endif %}
-            <div class="col-md-3"></div>
         </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <a href="{{ next_url }}" class="btn btn-primary btn-rounded">next page</a>
         </div>
-    {% endif %}
-{% endblock %}
+        {% endif %}
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endif %} {% endblock %}
