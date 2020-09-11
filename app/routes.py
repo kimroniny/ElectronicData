@@ -521,3 +521,7 @@ def get_capture_code():
     # 将验证码字符串储存在session中
     session['image'] = code
     return response
+
+@app.route('/registechain', methods=['GET', 'POST'])
+def registeChainAccount():
+    pass

@@ -60,14 +60,43 @@ contract Electronic {
         return userAddrs.length;
     }
 
+    event CharityInfo(
+        uint indexed id,
+        uint idInUser,
+        uint startTime,
+        uint endTime,
+        uint targetMoney,
+        uint hasMoney,
+        CharityType status,
+        address payable indexed owner
+    );
     function createCharity(uint endTime, uint targetMoney) userExist(msg.sender) public {
         require(block.timestamp < endTime, "endTime must be larger than startTime");
         require(targetMoney > 0, "targetMoney must be positive integer");
         Charity memory charity = Charity(charities.length, charitiesOfUser[msg.sender].length, block.timestamp, endTime, targetMoney, 0, CharityType.PENDING, msg.sender);
         charities.push(charity);
         charitiesOfUser[msg.sender].push(charity);
+        emit CharityInfo(
+            charity.id,
+            charity.idInUser,
+            charity.startTime,
+            charity.endTime,
+            charity.targetMoney,
+            charity.hasMoney,
+            charity.status,
+            charity.owner
+        );
     }
 
+    event FundInfo(
+        uint id,
+        uint charityId,
+        uint idInUser,
+        uint idInCharity,
+        uint money,
+        uint timestamp,
+        address donator
+    );
     function donate(uint charityId) userExist(msg.sender) payable public{
         require(charityId < charities.length);
         require(charities[charityId].status == CharityType.PENDING); // 还在募捐状态
@@ -102,6 +131,15 @@ contract Electronic {
         funds.push(fund);
         fundsOfUser[msg.sender].push(fund);
         fundsOfCharity[charityId].push(fund);
+        emit FundInfo(
+            fund.id, 
+            fund.charityId,
+            fund.idInUser,
+            fund.idInCharity,
+            fund.money,
+            fund.timestamp,
+            fund.donator
+        )
     }
 
     function updateCharityMoney(uint charityId, uint money) private {
@@ -153,6 +191,20 @@ contract Electronic {
         require(index < fundsOfCharity[charityId].length);
         Fund memory fund = fundsOfCharity[charityId][index];
         return (fund.charityId, fund.money, fund.timestamp, fund.donator);
+    }
+
+    function getFundById(uint fundId) view public returns (uint, uint, uint, uint, uint, uint, address){
+        require(fundId < funds.length);
+        Fund memory fund = funds[fundId];
+        return (
+            fund.id, 
+            fund.charityId,
+            fund.idInUser,
+            fund.idInCharity,
+            fund.money,
+            fund.timestamp,
+            fund.donator
+        )
     }
 
     fallback () external payable {

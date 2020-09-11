@@ -1,6 +1,13 @@
+import sys, os
+sys.path.append(os.path.abspath('.'))
+print(sys.path)
 import json
 from web3 import Web3, HTTPProvider
-url = 'http://192.168.64.130:3001'
+from utils.chain.config import CHAINCONFIG
+charityConfig = CHAINCONFIG['charity']
+url = charityConfig['url']
+contract = charityConfig['contract']['charity']
+
 w3 =  Web3(HTTPProvider(url))
 
 defaultAccount = w3.eth.accounts[0]
@@ -9,8 +16,8 @@ for i in range(3):
     w3.geth.personal.unlockAccount(w3.eth.accounts[i], '', 0)
     print("unlock {}".format(w3.eth.accounts[i]))
 
-contract_addr = '0x2F0A47CE26AB5aDc63b7213AC60C8e67bFd4174f'
-contract_abi = json.load(open('./contract/abi/charity.abi', 'r'))
+contract_addr = contract['address']
+contract_abi = json.load(open(contract['abifile'], 'r'))
 contract = w3.eth.contract(address=contract_addr, abi=contract_abi)
 print("obtain contract success!")
 for i in range(3):

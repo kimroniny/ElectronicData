@@ -7,6 +7,8 @@ from flask_mail import Mail
 from logging.handlers import RotatingFileHandler, SMTPHandler
 import os
 import logging
+from utils.chain.HitChain import HitSdk
+from utils.hash.filehash import FilesHash
 
 
 # 创建app
@@ -30,6 +32,9 @@ login.login_message = '0,请登录'
 # 把app注册给Mail
 # 邮件管理
 mail = Mail(app)
+
+# hitChain = HitChain(url=Config.BLOCKCHAINURI)
+# fileHash = FilesHash()
 
 from app import routes, models, errors
 

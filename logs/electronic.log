@@ -104,3 +104,4 @@ Traceback (most recent call last):
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
 2020-09-11 04:38:32,566 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:49]
+2020-09-11 13:58:24,444 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
