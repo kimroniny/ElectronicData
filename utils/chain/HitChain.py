@@ -46,8 +46,6 @@ class HitSdk:
         self.name = name
         if poa: self.w3.middleware_onion.inject(geth_poa_middleware, layer=0)
     
-    
-
     def unlockAccount(self, account, password=""):
         try:
             flag = self.w3.geth.personal.unlock_account(account, '', 0)

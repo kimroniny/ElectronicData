@@ -46,9 +46,10 @@ class FilesHash:
         thehash.digest()
         return thehash.hexdigest()
 
-    def calcHashForStr(self, text):
+    def calcHashForStr(self, *args):
         thehash = hashlib.sha256()
-        thehash.update(str(text).encode('utf-8'))
+        for text in args:
+            thehash.update(str(text).encode('utf-8'))
         return thehash.hexdigest()
 
 if __name__ == "__main__":

@@ -9,6 +9,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from werkzeug.utils import secure_filename
 
+from utils.chain.HitChainForCharity import CharitySdk
+from utils.hash.filehash import FilesHash
+
 from datetime import datetime
 from functools import wraps
 from io import BytesIO
@@ -89,21 +92,38 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 # 发布新的数据资源
 @app.route('/issue', methods=['GET', 'POST'])
 @login_required
 def issue():
+    '''
+    首先计算文件的哈希值
+    首先要向链上注册
+    '''
     form = ResIssueForm()
     if form.validate_on_submit():
+        sdk = CharitySdk()
         resfile = form.resfile.data
+        infoHash = form.calcHash()
+        endTime = form.formatDatetimeToTimestamp()
+        money = form.formatPriceToInt()
         filename = resfile.filename
+        charityInfo, err = sdk.createCharity(endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
+        if not charityInfo:
+            flash(message=err)
+            return render_template('issue/res.html', title="issue resource", form=form)
         res = Resource(
             title=form.title.data,
-            price=form.price.data,
+            idOnChain=charityInfo['id'],
+            idInUserOnChain=charityInfo['idInUser'],
+            price=charityInfo['targetMoney'],
             body=form.body.data,
-            endTime=form.endTime.data,
+            endTime=datetime.fromtimestamp(charityInfo['endTime']),
             issuer=current_user,
-            filename=filename
+            filename=filename,
+            infoHash=charityInfo['infoHash'],
+            status=charityInfo['status']
         )
         db.session.add(res)
         db.session.commit()
@@ -112,10 +132,10 @@ def issue():
             os.makedirs(filedir)
         resfile.save(
             os.path.join(
-                app.config['RES_FILE_PATH'], str(res.id), res.filename
+                filedir, res.filename
             )
         )
-        flash('1,发布成功！！！资源已上架！')
+        flash('1,成功写入区块链, 项目发布成功(*^▽^*)')
         return redirect(url_for('index'))
     return render_template('issue/res.html', title="issue resource", form=form)
 

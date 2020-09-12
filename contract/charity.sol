@@ -3,7 +3,7 @@ pragma solidity ^0.7.0;
 
 contract Electronic {
 
-    enum CharityType {PENDING, FINISH}
+    enum CharityType {WAIT, PENDING, FINISH}
 
     address[] userAddrs;
 
@@ -14,7 +14,7 @@ contract Electronic {
         uint endTime;
         uint targetMoney;
         uint hasMoney;
-        string fileHash;
+        string infoHash;
         CharityType status;
         address payable owner;
     }
@@ -68,14 +68,14 @@ contract Electronic {
         uint endTime,
         uint targetMoney,
         uint hasMoney,
-        string fileHash,
+        string infoHash,
         CharityType status,
         address payable indexed owner
     );
-    function createCharity(uint endTime, uint targetMoney, string memory fileHash) userExist(msg.sender) public {
-        require(block.timestamp < endTime, "截止时间应晚于当前时间");
-        require(targetMoney > 0, "目标金额必须是正整数");
-        Charity memory charity = Charity(charities.length, charitiesOfUser[msg.sender].length, block.timestamp, endTime, targetMoney, 0, fileHash, CharityType.PENDING, msg.sender);
+    function createCharity(uint endTime, uint targetMoney, string memory infoHash) userExist(msg.sender) public {
+        require(block.timestamp < endTime, "endTime should be later than now");
+        require(targetMoney > 0, "the targetMoney must be positive integer");
+        Charity memory charity = Charity(charities.length, charitiesOfUser[msg.sender].length, block.timestamp, endTime, targetMoney, 0, infoHash, CharityType.PENDING, msg.sender);
         charities.push(charity);
         charitiesOfUser[msg.sender].push(charity);
         emit CharityInfo(
@@ -85,7 +85,7 @@ contract Electronic {
             charity.endTime,
             charity.targetMoney,
             charity.hasMoney,
-            charity.fileHash,
+            charity.infoHash,
             charity.status,
             charity.owner
         );
@@ -101,11 +101,11 @@ contract Electronic {
         address donator
     );
     function donate(uint charityId) userExist(msg.sender) payable public{
-        require(charityId < charities.length, "超出索引最大范围");
-        require(charities[charityId].status == CharityType.PENDING, "募捐项目状态不是PENDING状态"); // 还在募捐状态
-        require(charities[charityId].hasMoney < charities[charityId].targetMoney, "募捐项目已募捐到目标金额"); // fund is less than ta
-        require(charities[charityId].endTime > block.timestamp, "募捐项目已到截止时间"); // expired
-        require(charities[charityId].owner != msg.sender, "募捐项目的发起人不可以捐款"); // sender can not be equal to owner
+        require(charityId < charities.length, "charityId cannot be larger than length");
+        require(charities[charityId].status == CharityType.PENDING, "charity status is not PENDING"); // 还在募捐状态
+        require(charities[charityId].hasMoney < charities[charityId].targetMoney, "charity has more money than target"); // fund is less than ta
+        require(charities[charityId].endTime > block.timestamp, "charity is dued"); // expired
+        require(charities[charityId].owner != msg.sender, "the owner of charity cannot donate to his/her charity"); // sender can not be equal to owner
         require(msg.value > 0);
         
         // 计算有效捐款
@@ -167,8 +167,8 @@ contract Electronic {
         return charitiesOfUser[addr].length;
     }
 
-    function getCharityById(uint id) view public returns (uint, uint, uint, uint, uint, uint, string, CharityType, address){
-        require(id < charities.length, "超出索引最大范围");
+    function getCharityById(uint id) view public returns (uint, uint, uint, uint, uint, uint, string memory, CharityType, address){
+        require(id < charities.length, "id cannot be larger than length");
         Charity memory charity = charities[id];
         return (
             charity.id,
@@ -177,14 +177,14 @@ contract Electronic {
             charity.endTime,
             charity.targetMoney,
             charity.hasMoney,
-            charity.fileHash,
+            charity.infoHash,
             charity.status,
             charity.owner
         );
     }
 
-    function getCharityBySomeoneId(address addr, uint id) userExist(addr) view public returns (uint, uint, uint, uint, uint, uint, string, CharityType, address) {
-        require(id < charitiesOfUser[addr].length, "超出索引最大范围");
+    function getCharityBySomeoneId(address addr, uint id) userExist(addr) view public returns (uint, uint, uint, uint, uint, uint, string memory, CharityType, address) {
+        require(id < charitiesOfUser[addr].length, "id cannot be larger than length");
         Charity memory charity = charitiesOfUser[addr][id];
         return (
             charity.id,
@@ -193,7 +193,7 @@ contract Electronic {
             charity.endTime,
             charity.targetMoney,
             charity.hasMoney,
-            charity.fileHash,
+            charity.infoHash,
             charity.status,
             charity.owner
         );
@@ -210,8 +210,8 @@ contract Electronic {
     }
 
     function getFundByIndexWithCharityId(uint charityId, uint index) view public returns (uint, uint, uint, uint, uint, uint, address){
-        require(charityId < charities.length, "超出索引最大范围");
-        require(index < fundsOfCharity[charityId].length, "超出索引最大范围");
+        require(charityId < charities.length, "charityId cannot be larger than length");
+        require(index < fundsOfCharity[charityId].length, "indexInUser cannot be larger than userlength");
         Fund memory fund = fundsOfCharity[charityId][index];
         return (
             fund.id, 
@@ -225,7 +225,7 @@ contract Electronic {
     }
 
     function getFundById(uint fundId) view public returns (uint, uint, uint, uint, uint, uint, address){
-        require(fundId < funds.length, "超出索引最大范围");
+        require(fundId < funds.length, "fundId cannot be larger than length");
         Fund memory fund = funds[fundId];
         return (
             fund.id, 

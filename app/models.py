@@ -6,7 +6,7 @@ from hashlib import md5
 from Crypto.Hash import keccak
 import jwt
 from time import time
-# from flask_sqlalchemy.utils.sqlalchemy import 
+from utils.chain.HitChain import ContractExecType
 
 
 @login.user_loader
@@ -55,17 +55,26 @@ class Certs(db.Model):
         }
 
 
+from enum import Enum
+class ResourceStatus(Enum):
+        WAIT = 0
+        PENDING = 1
+        FINISH = 2
 class Resource(db.Model):
     __tablename__ = 'resource'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, )
     title = db.Column(db.String(60))
     body = db.Column(db.String(200))
+    idOnChain = db.Column(db.Integer, index=True, unique=True)
+    idInUserOnChain = db.Column(db.Integer, default=-1)
     price = db.Column(db.Integer, default=1)
     has_price = db.Column(db.Integer, default=0)
     endTime = db.Column(db.DateTime)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     updatetime = db.Column(db.DateTime)
     filename = db.Column(db.String(100))
+    infoHash = db.Column(db.String(100))
+    status = db.Column(db.Integer, default=ResourceStatus.WAIT)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
 
     def __repr__(self):
@@ -81,7 +90,6 @@ class Resource(db.Model):
             resource_id=self.id,
         ).count()
             
-
     def as_dict(self):
         return {
             'id': self.id,
@@ -110,7 +118,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     balance = db.Column(db.Integer, default=0)
     pub_key = db.Column(db.String(64), default=generate_pub_key)
-    address = db.Column(db.String(40), default=generate_addr)
+    address = db.Column(db.String(42), default=generate_addr)
+    account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True)
@@ -128,6 +137,12 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def set_account_password(self, password):
+        self.account_password_hash = generate_password_hash(password)
+
+    def check_account_password(self, password):
+        return check_password_hash(self.account_password_hash, password)
 
     def avatar(self, size):
         digest = md5(self.username.lower().encode('utf-8')).hexdigest()

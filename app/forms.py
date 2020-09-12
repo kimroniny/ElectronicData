@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange
 from flask_wtf.file import FileField, FileRequired
 import datetime
+from utils.hash.filehash import FilesHash
 
 class LoginForm(FlaskForm):
     username = StringField('用户名', validators=[DataRequired()])
@@ -93,6 +94,21 @@ class ResIssueForm(FlaskForm):
             raise ValidationError('Please input an Integer')
         if p <= 0:
             raise ValidationError('Please input a positive Integer')
+
+    def formatDatetimeToTimestamp(self):
+        return int(datetime.datetime.timestamp(self.endTime.data)) # endTime.data 是一个 datetime 类型
+    
+    def formatPriceToInt(self):
+        return int(self.price.data)
+
+    def calcHash(self):
+        """
+        TODO: 实现信息的sha256值，包括文件，标题，详细描述，截止时间，账户地址
+        """
+        filehash = FilesHash()
+        infoHash = filehash.calcHashForStr(self.title, self.body, self.price, self.endTime)
+        return infoHash
+
         
 
 class ResTransferForm(FlaskForm):
@@ -104,6 +120,7 @@ class ResTransferForm(FlaskForm):
         user = User.query.filter_by(username=to.data).first()
         if user is None:
             raise ValidationError('用户名无效，请确认是否输入正确')
+    
 
 class ResDonateForm(FlaskForm):
     """

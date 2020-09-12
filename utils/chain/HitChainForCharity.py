@@ -8,8 +8,8 @@ import json, traceback
 class CharitySdk(HitSdk):
     def __init__(self, *args, **kwargs):
         self.config = CHAINCONFIG['charity']
-        self.url = self.config['BLOCKCHAINURI']
-        super(CharitySdk, self).__init__(*args, **kwargs)
+        self.url = self.config['url']
+        super(CharitySdk, self).__init__(self.url, 'charity',*args, **kwargs)
     
     def newAccount(self, password=''):
         addr = self.w3.geth.personal.new_account(password)
@@ -24,16 +24,25 @@ class CharitySdk(HitSdk):
         )
         return addr
     
-    def createCharity(self, endTime, money, fileHash, owner):
+    def createCharity(self, endTime, money, infoHash, owner):
         """
-        先创建募捐项目
-        然后从链上获取该项目的信息
+        创建募捐项目，并返回项目信息
+        result的结果对应字段是：
+            uint id,
+            uint idInUser,
+            uint startTime,
+            uint endTime,
+            uint targetMoney,
+            uint hasMoney,
+            string infoHash,
+            CharityType status,
+            address payable owner
         """
         try:
             owner = self.w3.toChecksumAddress(owner)
             _, eventArgsInfo, err = self.operate(
                 func_name='createCharity',
-                func_args=[endTime, money, fileHash], # TODO: 增加文件的哈希值
+                func_args=[endTime, money, infoHash], # TODO: 增加文件的哈希值
                 exec_type=ContractExecType.CONTRACT_TRAN,
                 args={'from': owner},
                 event_names=['CharityInfo']
@@ -48,10 +57,10 @@ class CharitySdk(HitSdk):
                 TODO：一个解决办法是给链上的Charity加个字段ack，默认为FALSE，只有链上创建项目成功并成功从event中获取charityId，才向链上发送交易，更改ack的值为True，正式开启募捐。
                 '''
             # 所有的返回值都在程序的最后emit出去，所以使用-1来索引        
-            return args[-1]
+            return args[-1], ""
         except Exception as e:
             print(traceback.format_exc())
-            return {}
+            return {}, str(e)
 
     def donate(self, charityId, value, sender):
         try:
@@ -80,7 +89,7 @@ class CharitySdk(HitSdk):
             uint endTime,
             uint targetMoney,
             uint hasMoney,
-            string fileHash,
+            string infoHash,
             CharityType status,
             address payable indexed owner
 
@@ -97,7 +106,7 @@ class CharitySdk(HitSdk):
             'endTime',
             'targetMoney',
             'hasMoney',
-            'fileHash'
+            'infoHash'
             'status',
             'owner',
         ]

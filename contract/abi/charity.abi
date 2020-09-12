@@ -5,17 +5,108 @@
 			{
 				"indexed": true,
 				"internalType": "uint256",
-				"name": "_id",
+				"name": "id",
 				"type": "uint256"
 			},
 			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idInUser",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "startTime",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "endTime",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "targetMoney",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "hasMoney",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "infoHash",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum Electronic.CharityType",
+				"name": "status",
+				"type": "uint8"
+			},
+			{
 				"indexed": true,
-				"internalType": "address",
-				"name": "_owner",
+				"internalType": "address payable",
+				"name": "owner",
 				"type": "address"
 			}
 		],
 		"name": "CharityInfo",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "charityId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idInUser",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idInCharity",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "money",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "donator",
+				"type": "address"
+			}
+		],
+		"name": "FundInfo",
 		"type": "event"
 	},
 	{
@@ -61,6 +152,11 @@
 				"internalType": "uint256",
 				"name": "hasMoney",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "infoHash",
+				"type": "string"
 			},
 			{
 				"internalType": "enum Electronic.CharityType",
@@ -122,6 +218,11 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "string",
+				"name": "infoHash",
+				"type": "string"
+			},
+			{
 				"internalType": "enum Electronic.CharityType",
 				"name": "status",
 				"type": "uint8"
@@ -146,16 +247,15 @@
 				"internalType": "uint256",
 				"name": "targetMoney",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "infoHash",
+				"type": "string"
 			}
 		],
 		"name": "createCharity",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -168,13 +268,7 @@
 			}
 		],
 		"name": "donate",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
 	},
@@ -384,6 +478,16 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
 				"internalType": "enum Electronic.CharityType",
 				"name": "",
 				"type": "uint8"
@@ -433,6 +537,21 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
 				"internalType": "enum Electronic.CharityType",
 				"name": "",
 				"type": "uint8"
@@ -469,6 +588,55 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "fundId",
+				"type": "uint256"
+			}
+		],
+		"name": "getFundById",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "charityId",
 				"type": "uint256"
 			},
@@ -480,6 +648,21 @@
 		],
 		"name": "getFundByIndexWithCharityId",
 		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
 			{
 				"internalType": "uint256",
 				"name": "",

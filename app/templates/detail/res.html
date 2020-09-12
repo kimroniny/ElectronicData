@@ -92,7 +92,7 @@
             <div class="row">
                 <p class="col-sm-3 text-right" style="font-weight: bold">创建人：</p>
                 <p class="col-sm-9 text-left">
-                    <a href="{{url_for('user', username=res.issuer.username)}}">{{res.issuer.username}}</a>
+                    <a href="{{url_for('user', userid=res.issuer.id)}}">{{res.issuer.username}}</a>
                 </p>
             </div>
             <div class="row">
@@ -134,13 +134,12 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                    关闭
-                  </button>
+                                        关闭
+                                    </button>
                                     <!-- 这里的button使用ajax写捐赠的逻辑 -->
                                     <button type="button" class="btn btn-primary" onclick="transfer();">
-                    <span id="donateSpan">捐款</span>
-                    
-                  </button>
+                                        <span id="donateSpan">捐款</span>
+                                    </button>
                                 </div>
 
                             </div>
