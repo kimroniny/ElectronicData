@@ -117,8 +117,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     balance = db.Column(db.Integer, default=0)
-    pub_key = db.Column(db.String(64), default=generate_pub_key)
-    address = db.Column(db.String(42), default=generate_addr)
+    # pub_key = db.Column(db.String(64), default=generate_pub_key) # 貌似乎以太坊没法获取公钥
+    idOnChain = db.Column(db.Integer, unique=True)
+    address = db.Column(db.String(42), unique=True)
     account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
@@ -138,11 +139,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def set_account_password(self, password):
-        self.account_password_hash = generate_password_hash(password)
+    def set_account_password(self, account_password):
+        self.account_password_hash = generate_password_hash(account_password)
 
-    def check_account_password(self, password):
-        return check_password_hash(self.account_password_hash, password)
+    def check_account_password(self, account_password):
+        return check_password_hash(self.account_password_hash, account_password)
 
     def avatar(self, size):
         digest = md5(self.username.lower().encode('utf-8')).hexdigest()

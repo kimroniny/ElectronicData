@@ -1,4 +1,4 @@
-from app import app, db
+from app import app, db, charitySDK
 from app.forms import *
 from app.capture import *
 from app.email import send_password_reset_email
@@ -15,15 +15,15 @@ from utils.hash.filehash import FilesHash
 from datetime import datetime
 from functools import wraps
 from io import BytesIO
-import json, os, pathlib
+import json, os, pathlib, traceback
 
 
 def checkPayPwd(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
-        if current_user.password_hash == None:
-            flash("0,请完善支付密码")
-            return redirect('user', userid=current_user.id)
+        if current_user.account_password_hash == None:
+            flash("0,充值、提现、捐款操作请首先创建链上账户")
+            return redirect(url_for('user', userid=current_user.id))
         else:
             return f(*args, **kwargs)
     return wrapped
@@ -103,7 +103,7 @@ def issue():
     '''
     form = ResIssueForm()
     if form.validate_on_submit():
-        sdk = CharitySdk()
+        sdk = charitySDK
         resfile = form.resfile.data
         infoHash = form.calcHash()
         endTime = form.formatDatetimeToTimestamp()
@@ -111,7 +111,7 @@ def issue():
         filename = resfile.filename
         charityInfo, err = sdk.createCharity(endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
         if not charityInfo:
-            flash(message=err)
+            flash(message="0,"+err)
             return render_template('issue/res.html', title="issue resource", form=form)
         res = Resource(
             title=form.title.data,
@@ -135,6 +135,11 @@ def issue():
                 filedir, res.filename
             )
         )
+        """
+        TODO: 这里要写一个给区块链的ack，表示可以运行了
+        然后区块链返回一个值表明项目运行成功与否
+        如果区块链运行项目失败，则回滚数据库，删除保存的文件。
+        """
         flash('1,成功写入区块链, 项目发布成功(*^▽^*)')
         return redirect(url_for('index'))
     return render_template('issue/res.html', title="issue resource", form=form)
@@ -144,20 +149,29 @@ def issue():
 @app.route('/res_donate', methods=['POST'])
 @login_required
 def res_donate():
-    result = {
-        'code': 0,
-        'msg': 'success',
-    }
-    if request.method == "POST":
-        money, password, resid = request.form['money'], request.form['password'], request.form['resid']
-        '''
-        这里是不是可以调用合约了
-        '''
-    else:
-        result['code'] = 101
-        result['msg'] = "REQUEST METHOD ERROR, only support POST"
-
-    return json.dumps(result)
+    try:
+        result = {
+            'code': 0,
+            'msg': 'success',
+            'err': ''
+        }
+        if request.method == "POST":
+            money, password, resid = int(request.form['money']), request.form['password'], int(request.form['resid'])
+            if not current_user.check_account_password(password):
+                raise Exception("链上账户解锁密码错误")
+            unlockFlag = charitySDK.unlockAccount(current_user.address, password=password) # 默认解锁时间为300s
+            if unlockFlag:
+                raise Exception("链上账户解锁失败")
+            donateresult = charitySDK.donate(charityId=resid,value=money,sender=current_user.address)
+            if donateresult['code'] != 0:
+                raise Exception(donateresult['err'])
+        else:
+            raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
+    except Exception as e:
+        result.update({'code': 101, 'msg': "error", 'err': str(e)})
+        print(traceback.format_exc())
+    finally:
+        return json.dumps(result)
 
 
 # 数据资源详情
@@ -175,8 +189,6 @@ def res_detail(resid):
         # bought=donated,
         issued=issued
     )
-
-
 
 
 @app.route('/user/<userid>', methods=['GET', 'POST'])
@@ -446,5 +458,26 @@ def get_capture_code():
     return response
 
 @app.route('/registechain', methods=['GET', 'POST'])
-def registeChainAccount():
-    pass
+def register_chain_account():
+    form = RegisteChainAccountForm()
+    if form.validate_on_submit():
+        account_password = form.account_password.data
+        print("====================={}".format(account_password))
+        result = charitySDK.registerChainAccount(account_password)
+        if not result:
+            flash("0,创建链上账户失败")
+        else:
+            idOnChain, address = result['id'], result['addr']
+            current_user.idOnChain = idOnChain
+            current_user.address = address
+            current_user.set_account_password(account_password)
+            db.session.commit()
+            flash("1,创建链上账户成功(*^▽^*)，链上账户地址可在个人信息中查看")
+            return redirect(url_for('index'))
+    return render_template(
+        'sign/registe_chain.html',
+        form=form,
+        title="注册链上账户"
+    )
+
+

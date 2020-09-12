@@ -66,7 +66,7 @@
     <script src="{{url_for('static', filename='e/plugins/moment/moment-with-locale.js')}}"></script>
     <script src="{{url_for('static', filename='e/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
     <script src="{{url_for('static', filename='e/plugins/toastr/toastr.min.js')}}"></script>
-    <script>
+    <script type="text/javascript">
         toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -83,6 +83,9 @@
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
+        }
+        function showLoadingModal() {
+            $("#LoadingModalButton").click();
         }
     </script>
 
@@ -193,7 +196,36 @@
                             {% endif %} {% endwith %}
                         </div>
 
-                        {% block content %} {% endblock content %}
+                        {% block content %} 
+                        {% endblock content %}
+                        
+                        <button style="display: none;" id="LoadingModalButton" data-toggle="modal" data-target=".bs-example-modal-sm"></button>
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display: none;">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <!-- <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title" id="mySmallModalLabel">Modal title</h4>
+                                    </div> -->
+                                    <div class="modal-body" style="padding-top: 10px; padding-bottom: 10px;">
+                                        <div class="text-center" id="donateLoading" style="margin-top: 10px; margin-bottom: 5px;">
+                                            <div class="spinner-border" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-center" style="margin-top: 5px; margin-bottom: 10px;">
+                                            <span>
+                                                {% block loadingmodaltext %}
+                                                {% endblock loadingmodaltext %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Row -->
                 </div>

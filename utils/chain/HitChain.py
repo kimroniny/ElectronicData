@@ -46,15 +46,19 @@ class HitSdk:
         self.name = name
         if poa: self.w3.middleware_onion.inject(geth_poa_middleware, layer=0)
     
-    def unlockAccount(self, account, password=""):
+    def unlockAccount(self, account, password="", duration=300):
         try:
-            flag = self.w3.geth.personal.unlock_account(account, '', 0)
+            flag = self.w3.geth.personal.unlock_account(account, '', duration)
             if not flag:
                 raise Exception("unlock new account failed, new account: {}".format(account))
         except Exception as e:
             print(traceback.format_exc())
             return False
         return True
+    
+    def newAccount(self, password=""):
+        return self.w3.geth.personal.newAccount(password)
+
     
     def sendSingleTransaction(self, tx):
         try:
@@ -79,7 +83,11 @@ class HitSdk:
     @recordTime
     def contractSingleTransaction(self, contract_address, contract_abi, exec_func, func_args=[], exec_type=ContractExecType.CONTRACT_CALL, source_args={}, event_names=[]):
         """执行合约交易
-
+        TODO: 
+        1. 先在abi中检测是否存在 func 和 event
+        2. 执行交易前是否可以先验证一下：
+            1. 当前账户的余额是否大于交易的gas
+            2. 是否能执行成功
         Args:
             contract_address (str): 合约地址
             contract_abi (dict): 合约abi字典
@@ -128,18 +136,7 @@ if __name__ == "__main__":
     contract = charityConfig['contract']['charity']
     myeth = HitSdk(url=charityConfig['url'], name="node1", poa=True)
 
-    result, eventArgsInfo, err = myeth.contractSingleTransaction(
-        contract_address=contract['address'],
-        contract_abi=json.load(open(contract['abifile'],'r')),
-        exec_func='getCharityById',
-        exec_type=ContractExecType.CONTRACT_CALL,
-        source_args={'from': myeth.w3.eth.accounts[0]},
-        func_args=[100],
-        event_names=[]
-    )
-    print("result: {}".format(result))
-    print("eventArgsInfo: {}".format(eventArgsInfo))
-    print("err: {}".format(err))
+    
     
         
 '''

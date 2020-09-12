@@ -11,18 +11,38 @@ class CharitySdk(HitSdk):
         self.url = self.config['url']
         super(CharitySdk, self).__init__(self.url, 'charity',*args, **kwargs)
     
-    def newAccount(self, password=''):
-        addr = self.w3.geth.personal.new_account(password)
-        mainContractInfo = self.contractConfig.mainContractInfo
-        txReceipt = self.contractSingleTransaction(
-            mainContractInfo['address'],
-            mainContractInfo['abi'],
-            self.contractConfig.mainContractFunctions.NEWUSER,
-            ContractExecType.CONTRACT_TRAN,
-            {'from': self.defaultAccount},
-            addr
-        )
-        return addr
+    def registerChainAccount(self, password=''):
+        """
+        1. 使用 password 作为账户解锁密钥创建链上账户
+        2. 将新创建的账户地址加入到 charity 合约记录中。
+        3. 从事件 UserInfo 获取新创建的链上账户编号和地址 
+
+        Args:
+            password (str, optional): [description]. Defaults to ''.
+
+        Returns:
+            dict: {'id': int, 'addr': address}
+        """
+        try:
+            addr = self.w3.geth.personal.new_account(password)
+            _, eventArgsInfo, err = self.operate(
+                func_name='newUser',
+                func_args=[addr],
+                exec_type=ContractExecType.CONTRACT_TRAN,
+                args={'from': self.defaultAccount},    
+                event_names=['UserInfo']        
+            )
+            if err: raise Exception("new account join CharityUser Failed! ERROR: {}".format(err))
+            # TODO: 把对eventArgsInfo的判断进行封装
+            if not eventArgsInfo.get('UserInfo', None): raise Exception("in newUser, event[UserInfo] cannot be found")
+            args = eventArgsInfo['UserInfo']
+            if len(args) < 1: 
+                raise Exception("in registerChainAccount, obtain event args UserInfo Failed! len(args) is empty!")
+            # 所有的返回值都在程序的最后emit出去，所以使用-1来索引        
+            return args[-1]
+        except Exception as e:
+            print(traceback.format_exc())
+            return {}
     
     def createCharity(self, endTime, money, infoHash, owner):
         """
@@ -48,6 +68,7 @@ class CharitySdk(HitSdk):
                 event_names=['CharityInfo']
             )
             if err: raise Exception("create charity on chain Failed! ERROR: {}".format(err))
+            if not eventArgsInfo.get('CharityInfo', None): raise Exception("in newUser, event[CharityInfo] cannot be found")
             args = eventArgsInfo['CharityInfo']
             if len(args) < 1: 
                 raise Exception("in createCharity, obtain event args CharityInfo Failed! len(args) is too short")
@@ -63,22 +84,30 @@ class CharitySdk(HitSdk):
             return {}, str(e)
 
     def donate(self, charityId, value, sender):
+        result = {
+            'code': 0,
+            'msg': {},
+            'err': ""
+        }
         try:
             _, eventArgsInfo, err = self.operate(
                 func_name='donate',
-                func_args=charityId,
+                func_args=[charityId],
                 exec_type=ContractExecType.CONTRACT_TRAN,
                 args={'from': sender, 'value': value},
                 event_names=['FundInfo']
             )
             if err: raise Exception("donate Failed! ERROR: {}".format(err))
+            if not eventArgsInfo.get('FundInfo', None): raise Exception("in newUser, event[UseFundInforInfo] cannot be found")
             args = eventArgsInfo['FundInfo']
             if len(args) < 1: 
                 raise Exception("in donate, obtain event args FundInfo Failed! len(args) is too short")
-            return args[-1]
+            result.update({'msg': args[-1]})
         except Exception as e:
             print(traceback.format_exc())
-            return {}
+            result.update({'code': 101, 'err': str(e)})
+        finally:
+            return result
             
     def getCharityById(self, charityId):
         """根据charityId获取charity的信息
@@ -174,3 +203,8 @@ class CharitySdk(HitSdk):
             event_names=event_names
         )
         return result, eventArgsInfo, err
+
+if __name__ == "__main__":
+    charitySDK = CharitySdk()
+    result = charitySDK.donate(8,100,'0x5915b5b28727C6876d157f5de344A2fc498eE6f4')
+    print(result)

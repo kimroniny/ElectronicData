@@ -43,7 +43,6 @@ class FilesHash:
                 if not buf:
                     break
                 thehash.update(buf)
-        thehash.digest()
         return thehash.hexdigest()
 
     def calcHashForStr(self, *args):
@@ -54,5 +53,14 @@ class FilesHash:
 
 if __name__ == "__main__":
     fileHash = FilesHash()
-    result = fileHash.calcHashForDir('./resfiles')
-    print(result)
+    # r1 = fileHash.calcHashForStr("123", "456", "789")
+    # r2 = fileHash.calcHashForStr("123456789")
+    filePath = './resfiles/郭仪.jpg'
+    r1 = fileHash.calcHashForFile(filePath=filePath)
+    thehash = hashlib.sha256()
+    with open(filePath, 'rb') as f:
+        buf = f.read()
+        thehash.update(buf)
+    r2 = thehash.hexdigest()
+    print(r1)
+    print(r2)

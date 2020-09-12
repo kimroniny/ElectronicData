@@ -20,8 +20,7 @@ contract Electronic {
     }
     Charity[] public charities;
     mapping (address => Charity[]) public charitiesOfUser;
-
-
+    
     struct Fund {
         uint id;
         uint charityId;
@@ -53,8 +52,14 @@ contract Electronic {
         _;
     }
 
+    event UserInfo(
+        uint indexed id,
+        address addr
+    );
+
     function newUser(address _addr) userNotExist(_addr) public {
         userAddrs.push(_addr);
+        emit UserInfo(userAddrs.length-1, _addr);
     }
 
     function getUserNumber() view public returns (uint) {

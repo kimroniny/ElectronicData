@@ -103,13 +103,17 @@ class ResIssueForm(FlaskForm):
 
     def calcHash(self):
         """
-        TODO: 实现信息的sha256值，包括文件，标题，详细描述，截止时间，账户地址
+        TODO: 实现文件的hash值
         """
         filehash = FilesHash()
         infoHash = filehash.calcHashForStr(self.title, self.body, self.price, self.endTime)
         return infoHash
 
-        
+class RegisteChainAccountForm(FlaskForm):
+    account_password = PasswordField("链上账户密码", validators=[DataRequired()])
+    account_password2 = PasswordField("确认链上账户密码", validators=[DataRequired(), EqualTo('account_password')])
+    submit = SubmitField("确认创建")
+
 
 class ResTransferForm(FlaskForm):
     res_id = HiddenField()

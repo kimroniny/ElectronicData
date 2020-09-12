@@ -1,4 +1,7 @@
-2020-09-12 13:20:18,714 ERROR: Exception on /res_detail/1 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-12 22:10:02,305 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-12 22:21:59,310 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-12 22:52:30,219 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-12 22:52:47,566 ERROR: Exception on /registechain [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,45 +15,26 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 176, in res_detail
-    issued=issued
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
-    ctx.app,
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
-    rv = template.render(context)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 1, in top-level template code
-    {% extends "base/base.html" %} {% block styles %}
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
-    return concat(self.root_render_func(self.new_context(vars)))
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 14, in root
-  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 80, in root
-    "timeOut": "5000",
-  File "/home/kr/workspace/ElectronicData/app/templates/detail/res.html", line 53, in block_content
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
-    return __obj(*args, **kwargs)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 473, in register_chain_account
+    db.commit()
+AttributeError: 'SQLAlchemy' object has no attribute 'commit'
+2020-09-12 22:54:08,135 ERROR: Exception on /registechain [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
     raise value
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
-    endpoint, values, method=method, force_external=external
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/werkzeug/routing.py", line 2020, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'user' with values ['username']. Did you forget to specify values ['userid']?
-2020-09-12 13:25:05,442 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
-2020-09-12 13:27:16,848 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
-2020-09-12 13:29:08,726 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
-2020-09-12 13:49:18,417 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
-2020-09-12 13:53:17,736 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:54]
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 473, in register_chain_account
+    db.session.commit()
+AttributeError: 'SQLAlchemy' object has no attribute 'commit'
+2020-09-12 23:05:31,743 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-12 23:05:38,516 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-12 23:07:28,874 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

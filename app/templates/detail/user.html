@@ -56,15 +56,10 @@
                 <p class="col-sm-9 text-left">{{user.balance}}</p>
             </div>
             <div class="row">
-                <p class="col-sm-3 text-right" style="font-weight: bold;"> 公钥： </p>
-                <p class="col-sm-9 text-left">
-                    <a href="" onclick="javascript: alert('公钥:\n0x{{user.pub_key}}');">点击查看</a>
-                </p>
-            </div>
-            <div class="row">
                     <p class="col-sm-3 text-right" style="font-weight: bold;"> 账户地址： </p>
                     <p class="col-sm-9 text-left">
-                        <a href="" onclick="javascript: alert('账户地址:\n0x{{user.address}}');">点击查看</a>
+                        <a href="" onclick="javascript: alert('账户地址:\n{{user.address}}');">点击查看</a>
+                        <!-- TODO 这里改成模态框-->
                     </p>
                 </div>
             {% if user==current_user %}

@@ -9,6 +9,7 @@ import os
 import logging
 from utils.chain.HitChain import HitSdk
 from utils.hash.filehash import FilesHash
+from utils.chain.HitChainForCharity import CharitySdk
 
 
 # 创建app
@@ -32,6 +33,9 @@ login.login_message = '0,请登录'
 # 把app注册给Mail
 # 邮件管理
 mail = Mail(app)
+
+# 创建区块链SDK
+charitySDK = CharitySdk()
 
 # hitChain = HitChain(url=Config.BLOCKCHAINURI)
 # fileHash = FilesHash()
