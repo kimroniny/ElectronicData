@@ -365,16 +365,18 @@ def page_res_transfer():
 def charge():
     form = ChargeForm()
     if form.validate_on_submit():
-        if current_user.check_password(form.paypwd.data):
-            current_user.balance += int(form.amount.data)
-            db.session.commit()
-            flash('1,充值 {} 成功'.format(form.amount.data))
+        if current_user.check_account_password(form.paypwd.data):
+            result = charitySDK.charge(money=form.amount.data, addr=current_user.address)
+            if result:
+                flash('1,充值成功，充值金额: {}ED'.format(form.amount.data))
+            else:
+                flash('0,充值失败')
         else:
             flash("0,密码错误")
     return render_template(
         'finance/charge.html',
         form=form,
-        title='charge'
+        title='充值'
     )
 
 

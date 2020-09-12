@@ -1,7 +1,4 @@
-2020-09-12 22:10:02,305 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-12 22:21:59,310 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-12 22:52:30,219 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-12 22:52:47,566 ERROR: Exception on /registechain [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-12 23:36:53,178 ERROR: Exception on /charge [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,26 +12,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 473, in register_chain_account
-    db.commit()
-AttributeError: 'SQLAlchemy' object has no attribute 'commit'
-2020-09-12 22:54:08,135 ERROR: Exception on /registechain [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 473, in register_chain_account
-    db.session.commit()
-AttributeError: 'SQLAlchemy' object has no attribute 'commit'
-2020-09-12 23:05:31,743 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-12 23:05:38,516 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-12 23:07:28,874 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 28, in wrapped
+    return f(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 371, in charge
+    flash('1,充值成功，充值金额: {}ED'.format())
+IndexError: tuple index out of range
+2020-09-12 23:37:15,434 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

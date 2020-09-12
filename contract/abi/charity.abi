@@ -120,6 +120,12 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "uint256",
+				"name": "balance",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "addr",
 				"type": "address"

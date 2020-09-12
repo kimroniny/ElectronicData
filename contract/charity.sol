@@ -54,12 +54,13 @@ contract Electronic {
 
     event UserInfo(
         uint indexed id,
+        uint balance,
         address addr
     );
 
     function newUser(address _addr) userNotExist(_addr) public {
         userAddrs.push(_addr);
-        emit UserInfo(userAddrs.length-1, _addr);
+        emit UserInfo(userAddrs.length-1, _addr.balance, _addr);
     }
 
     function getUserNumber() view public returns (uint) {

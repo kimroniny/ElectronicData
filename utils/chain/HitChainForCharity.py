@@ -5,23 +5,39 @@ from utils.chain.HitChain import ContractExecType
 from utils.chain.config import CHAINCONFIG
 import json, traceback
 
+# TODO 在该层调整一下参数的格式问题
 class CharitySdk(HitSdk):
     def __init__(self, *args, **kwargs):
         self.config = CHAINCONFIG['charity']
         self.url = self.config['url']
         super(CharitySdk, self).__init__(self.url, 'charity',*args, **kwargs)
     
+    def charge(self, money, addr):
+        tx = {
+            'from': self.defaultAccount,
+            'to': addr,
+            'value': int(money)
+        }
+        tx_receipt, err = self.sendSingleTransaction(tx)
+        if err: return False
+        return True
+
     def registerChainAccount(self, password=''):
         """
         1. 使用 password 作为账户解锁密钥创建链上账户
         2. 将新创建的账户地址加入到 charity 合约记录中。
         3. 从事件 UserInfo 获取新创建的链上账户编号和地址 
+        event UserInfo(
+            uint indexed id,
+            uint balance,
+            address addr
+        );
 
         Args:
             password (str, optional): [description]. Defaults to ''.
 
         Returns:
-            dict: {'id': int, 'addr': address}
+            dict: {'id': int, 'addr': address, 'balance': int}
         """
         try:
             addr = self.w3.geth.personal.new_account(password)
