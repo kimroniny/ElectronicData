@@ -365,6 +365,8 @@ def my_res_donate():
     certs = Certs.query.filter(
         Certs.user_id == current_user.id
     ).order_by(Certs.timestamp_pay.desc()).all()
+    
+    resource_dist = set()
     for cert in certs:
         res = Resource.query.filter_by(id=cert.resource_id).first()
         result.append({
@@ -372,10 +374,15 @@ def my_res_donate():
             'donate_timestamp': cert.timestamp_pay,
             'donate_price': cert.value
         })
+        resource_dist.add(res.id)
 
+    allnum = len(certs)
+    allnum_dist = len(resource_dist)
     return render_template(
         'myres/res_donate.html',
-        resources=result
+        resources=result,
+        allnum=allnum,
+        allnum_dist=allnum_dist
     )
 
 
@@ -481,6 +488,7 @@ def trace_donate(resid):
     result = []
     for cert in certs:
         result.append({
+            'userid': cert.user.id,
             'address': cert.user.address,
             'timestamp': cert.timestamp_pay,
             'value': cert.value
@@ -488,8 +496,8 @@ def trace_donate(resid):
     donatee_address = resource.issuer.address
     return render_template(
         'trace/trace.html',
-        title='trace_record',
-        res_title=Resource.query.filter_by(id=resid).first().title,
+        title=resource.title,
+        res_title=resource.title,
         donatee=donatee_address,
         result=result,
         enumerate=enumerate,

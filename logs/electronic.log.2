@@ -1,4 +1,4 @@
-2020-09-12 23:36:53,178 ERROR: Exception on /charge [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-13 21:04:24,540 ERROR: Exception on /withdraw [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,47 +14,16 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 28, in wrapped
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 31, in wrapped
     return f(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 371, in charge
-    flash('1,充值成功，充值金额: {}ED'.format())
-IndexError: tuple index out of range
-2020-09-12 23:37:15,434 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 14:23:39,773 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 14:26:10,782 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 14:26:57,535 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:12:43,709 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:13:56,760 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:27:14,682 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:36:18,313 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:41:34,603 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 15:58:35,115 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:00:10,774 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:02:45,293 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:03:17,122 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:16:29,019 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:21:39,696 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:22:14,835 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:24:54,343 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:28:11,491 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:52:18,978 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:56:13,856 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:56:52,533 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 16:57:46,047 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:02:05,303 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:10:32,001 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:11:06,359 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:11:12,673 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:12:49,650 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:22:46,312 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:24:16,720 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:25:37,070 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 17:26:17,564 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:42:05,024 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:42:11,195 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:42:17,352 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:42:25,495 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:52:37,647 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 424, in withdraw
+    money=form.amount.data, addr=current_user.address)
+TypeError: withdraw() missing 1 required positional argument: 'password'
+2020-09-13 21:05:04,360 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:20:11,061 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:21:08,601 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:24:03,317 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:26:16,209 ERROR: Exception on /issue [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -70,11 +39,22 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 352, in my_res_donate
-    Certs.payer_id == current_user.id
-AttributeError: type object 'Certs' has no attribute 'payer_id'
-2020-09-13 19:56:28,512 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 19:56:39,308 ERROR: Exception on /page_res_transfer [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 120, in issue
+    endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
+TypeError: createCharity() missing 1 required positional argument: 'password'
+2020-09-13 21:31:38,514 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:41:39,589 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:41:48,004 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:43:37,518 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:49:03,592 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:52:23,966 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 21:58:40,474 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:01:59,830 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:04:37,719 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:12:41,894 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:14:06,402 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:15:38,454 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:15:40,545 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -90,18 +70,33 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 394, in page_res_transfer
-    Certs.payer_id == current_user.id, Certs.transfer_id != None
-AttributeError: type object 'Certs' has no attribute 'payer_id'
-2020-09-13 19:57:17,902 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:12:22,275 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:16:00,506 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:29:22,739 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:40:07,590 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:53:56,391 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:54:17,007 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:55:12,428 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:56:13,162 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:56:29,588 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 20:58:31,858 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 21:03:38,180 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 379, in my_res_donate
+    resources=result
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 14, in root
+    <div class="panel-body">
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 79, in root
+    "hideDuration": "1000",
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 46, in block_content
+    {% endfor %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 630, in _fail_with_undefined_error
+    raise self._undefined_exception(hint)
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'avatar'
+2020-09-13 22:20:13,713 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

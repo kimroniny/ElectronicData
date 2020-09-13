@@ -11,6 +11,15 @@
 {% endblock %} 
 {% block content %} 
 {% if resources %} 
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <hr>
+</div>
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <span>在过去的日子里，您曾为 {{all_num_dist}} 个项目捐赠善款，累计捐款 {{all_num}} 次，感谢您带给无数人以希望。</span>
+</div>
+<div class="col-sm-12 col-lg-10 col-lg-offset-1">
+    <hr>
+</div>
 {% for resource in resources %}
 <div class="col-sm-12 col-lg-10 col-lg-offset-1">
     <div class="panel panel-white">
