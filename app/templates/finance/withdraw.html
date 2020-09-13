@@ -39,10 +39,14 @@
                     <p style="color: red; margin-bottom:0;" class="help-block">[{{ error }}]</p>
                     {% endfor %}
                 </div>
-                {{ form.submit(class_="btn btn-primary") }}
+                {{ form.submit(class_="btn btn-primary", onclick="showLoadingModal();") }}
             </form>
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block loadingmodaltext %}
+正在从区块链账户中提现，请稍等......
 {% endblock %}

@@ -10,17 +10,40 @@ class CharitySdk(HitSdk):
     def __init__(self, *args, **kwargs):
         self.config = CHAINCONFIG['charity']
         self.url = self.config['url']
+        self.gasPrice = self.config['gasPrice']
         super(CharitySdk, self).__init__(self.url, 'charity',*args, **kwargs)
     
     def charge(self, money, addr):
         tx = {
             'from': self.defaultAccount,
-            'to': addr,
-            'value': int(money)
+            'to': self.w3.toChecksumAddress(addr),
+            'value': int(money),
+            'gasPrice': self.gasPrice
         }
         tx_receipt, err = self.sendSingleTransaction(tx)
         if err: return False
         return True
+
+    def withdraw(self, money, addr, password):
+        """
+        TODO 
+        1. 转账这里最好不要由原账户发起操作，这样会有gas的损耗
+        2. 或者直接gas_price设置为0，但是这样挖矿很难，大家很少会来挖矿
+        """
+        money = int(money)
+        if money > self.getAccountBalance(addr):
+            return -1
+        result = self.unlockAccount(addr, password=password)
+        if not result: return -2
+        tx = {
+            'from': self.w3.toChecksumAddress(addr),
+            'to': self.defaultAccount,
+            'value': money,
+            'gasPrice': self.gasPrice
+        }
+        tx_receipt, err = self.sendSingleTransaction(tx)
+        if err: return 1
+        return 0
 
     def registerChainAccount(self, password=''):
         """
@@ -60,8 +83,9 @@ class CharitySdk(HitSdk):
             print(traceback.format_exc())
             return {}
     
-    def createCharity(self, endTime, money, infoHash, owner):
+    def createCharity(self, endTime, money, infoHash, owner, password):
         """
+        TODO 把账户解锁调整到该层来实现
         创建募捐项目，并返回项目信息
         result的结果对应字段是：
             uint id,
@@ -209,6 +233,7 @@ class CharitySdk(HitSdk):
     def operate(self, func_name, func_args=[], exec_type=ContractExecType.CONTRACT_CALL, args={}, event_names=[]):
         contract_address = self.config['contract']['charity']['address']
         contract_abifile = self.config['contract']['charity']['abifile']
+        args.update({'gasPrice': self.gasPrice})
         result, eventArgsInfo, err = self.contractSingleTransaction(
             contract_address=contract_address,
             contract_abi=json.load(open(contract_abifile,'r')),
@@ -221,6 +246,6 @@ class CharitySdk(HitSdk):
         return result, eventArgsInfo, err
 
 if __name__ == "__main__":
-    charitySDK = CharitySdk()
-    result = charitySDK.donate(8,100,'0x5915b5b28727C6876d157f5de344A2fc498eE6f4')
+    sdk = CharitySdk()
+    result = sdk.donate(8,100,'0x5915b5b28727C6876d157f5de344A2fc498eE6f4')
     print(result)

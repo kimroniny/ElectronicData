@@ -386,16 +386,18 @@ def charge():
 def withdraw():
     form = WithdDraw()
     if form.validate_on_submit():
-        if current_user.check_password(form.paypwd.data):
-            if current_user.balance >= int(form.amount.data):
-                current_user.balance -= int(form.amount.data)
-                db.session.commit()
-                flash('1,提现 {} 成功'.format(form.amount.data))
+        if current_user.check_account_password(form.paypwd.data):
+            result = charitySDK.withdraw(money=form.amount.data, addr=current_user.address)
+            if result == 0:
+                flash('1,提现成功，提现金额: {}ED'.format(form.amount.data))
+            elif -1 == result:
+                flash("0,链上账户余额不足")
+            elif -2 == result:
+                flash("0,链上账户解锁失败")
             else:
-                flash('0,余额不足以提现 {}'.format(
-                    form.amount.data))
+                flash('0,提现失败')
         else:
-            flash("0,密码错误")
+            flash('0,密码错误')
     return render_template(
         'finance/withdraw.html',
         form=form,

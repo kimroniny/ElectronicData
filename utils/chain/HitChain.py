@@ -40,6 +40,9 @@ class ContractConfig:
         return ContractFunction()
 
 class HitSdk:
+    """
+    对于交易性函数，提前判断from账户是否已经解锁，但是不提供解锁功能
+    """
     def __init__(self, url, name="unknown{}".format(int(time.time()*1000)), poa=False):
         self.w3 =  Web3(HTTPProvider(url))
         self.contractConfig = ContractConfig()
@@ -48,7 +51,8 @@ class HitSdk:
     
     def unlockAccount(self, account, password="", duration=300):
         try:
-            flag = self.w3.geth.personal.unlock_account(account, '', duration)
+            account = self.w3.toChecksumAddress(account)
+            flag = self.w3.geth.personal.unlock_account(account, password, duration)
             if not flag:
                 raise Exception("unlock new account failed, new account: {}".format(account))
         except Exception as e:
@@ -59,8 +63,19 @@ class HitSdk:
     def newAccount(self, password=""):
         return self.w3.geth.personal.newAccount(password)
 
+    def getAccountBalance(self, addr):
+        addr = self.w3.toChecksumAddress(addr)
+        return self.w3.eth.getBalance(addr)
     
     def sendSingleTransaction(self, tx):
+        """发送交易， gasPrice 会被设置为 0
+
+        Args:
+            tx ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         try:
             tx_hash = self.w3.eth.sendTransaction(tx)
             tx_receipt = self.w3.eth.waitForTransactionReceipt(tx_hash, timeout=100000)
