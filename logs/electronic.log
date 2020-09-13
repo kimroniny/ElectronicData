@@ -96,3 +96,4 @@ AttributeError: type object 'Certs' has no attribute 'payer_id'
 2020-09-13 19:57:17,902 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-13 20:12:22,275 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-13 20:16:00,506 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 20:29:22,739 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
