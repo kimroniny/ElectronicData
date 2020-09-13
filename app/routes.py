@@ -167,15 +167,7 @@ def res_donate():
             donateresult = charitySDK.donate(charityId=resource['idOnChain'],value=money,sender=current_user.address)
             if donateresult['code'] != 0:
                 raise Exception(donateresult['err'])
-            """
-            uint id,
-            uint charityId,
-            uint idInUser,
-            uint idInCharity,
-            uint money,
-            uint timestamp,
-            address donator
-            """
+
             fundInfo = donateresult['msg']
             fund_idOnChain = fundInfo['id']
             fund_charityIdOnChain = fundInfo['charityId'],
@@ -183,11 +175,24 @@ def res_donate():
             fund_idInCharityOnChain = fundInfo['idInCharity'],
             fund_value = fundInfo['money'],
             fund_timestamp_pay = fundInfo['timestamp']
-            fund_payer = current_user
-            Certs(
-                
+            fund_payer = fundInfo['donator']
+            cert = Certs(
+                resource=Resource.query.filter_by(idOnChain=fund_charityIdOnChain).first(),
+                user=User.query.filter_by(address=fund_payer).first(),
+                timestamp_pay=datetime.fromtimestamp(fund_timestamp_pay),
+                value=fund_value,
+                idOnchain=fund_idOnChain
             )
-            
+            db.session.add(cert)
+            db.session.commit()
+            result, err = charitySDK.getCharityById(fund_charityIdOnChain)
+            if err: raise Exception("cgetCharityById({}) failed, err: {}".format(fund_charityIdOnChain, err)) 
+            hasMoney = result.get('hasMoney', None)
+            status = result.get('status', None)
+            if hasMoney and status:
+                db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update({'has_price': int(hasMoney), 'status':status})
+            else:
+                raise Exception("charity update hasMoney and status failed, ")
         else:
             raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
     except Exception as e:

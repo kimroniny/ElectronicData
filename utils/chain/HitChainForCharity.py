@@ -187,10 +187,10 @@ class CharitySdk(HitSdk):
             )
             if err: raise Exception("getCharityById Failed! ERROR: {}".format(err))
             if len(result) != len(keys): raise Exception("getCharityById len(result) != len(keys), pls check the keys")
-            return {key: val for key, val in zip(keys, result)}
+            return {key: val for key, val in zip(keys, result)}, ""
         except Exception as e:
             print(traceback.format_exc())
-            return {}        
+            return {}, str(e)        
     
     def getFundById(self, fundId):
         """根据 fundId 获取 fund 的信息

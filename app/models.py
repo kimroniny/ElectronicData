@@ -9,8 +9,9 @@ from time import time
 from utils.chain.HitChain import ContractExecType
 
 """
-User(1)     ->  Resource(N)     By User.id
-Resource(1) ->  Certs(N)        By Resource.id
+User(1)     ->  Resource(N)     By User.id          -> issue
+Resource(1) ->  Certs(N)        By Resource.id      -> have/donated
+User(1)     ->  Certs(N)        By User.id          -> have/donate
 """
 
 @login.user_loader
