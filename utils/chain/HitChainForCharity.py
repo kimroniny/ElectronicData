@@ -148,9 +148,20 @@ class CharitySdk(HitSdk):
             result.update({'code': 101, 'err': str(e)})
         finally:
             return result
-            
-    def getCharityById(self, charityId):
-        """根据charityId获取charity的信息
+    
+    def getUserByIdOnChain(self, idOnChain):
+        """根据 idOnChain 获取链上用户信息
+        result 的结果对应字段是：
+            uint indexed id,
+            address indexed addr
+
+        Args:
+            idOnChain ([type]): [description]
+        """
+        pass
+
+    def getCharityByIdOnChain(self, charityIdOnChain):
+        """根据 charityIdOnChain 获取charity的信息
         result的结果对应字段是：
             uint indexed id,
             uint idInUser,
@@ -168,6 +179,7 @@ class CharitySdk(HitSdk):
         Raises:
             Exception: [description]
         """
+        charityId = charityIdOnChain
         keys = [
             'id',
             'idInUser',
@@ -193,8 +205,8 @@ class CharitySdk(HitSdk):
             print(traceback.format_exc())
             return {}, str(e)        
     
-    def getFundById(self, fundId):
-        """根据 fundId 获取 fund 的信息
+    def getFundByIdOnChain(self, fundIdOnChain):
+        """根据 fundIdOnChain 获取 fund 的信息
         result的结果对应字段是：
             uint id,
             uint charityId,
@@ -209,6 +221,7 @@ class CharitySdk(HitSdk):
         Raises:
             Exception: [description]
         """
+        fundId = fundIdOnChain
         keys = [
             'id',
             'charityId',

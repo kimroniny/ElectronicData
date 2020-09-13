@@ -96,3 +96,5 @@ jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You pro
 2020-09-13 23:49:19,161 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-14 00:14:10,533 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-14 00:22:18,281 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 00:54:01,108 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 00:54:09,751 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

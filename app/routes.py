@@ -205,7 +205,7 @@ def res_donate():
             db.session.add(cert)
             db.session.commit()
             print("donate record has been written to db")
-            result, err = charitySDK.getCharityById(fund_charityIdOnChain)
+            result, err = charitySDK.getCharityByIdOnChain(fund_charityIdOnChain)
             if err:
                 raise Exception("getCharityById({}) failed, err: {}".format(
                     fund_charityIdOnChain, err))

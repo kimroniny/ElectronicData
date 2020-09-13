@@ -53,7 +53,13 @@ from app.models import (
 from multiprocessing import process
 
 def sync_user():
-    charitySDK.get
+    """从数据库中读取 user 的链上账户地址，然后获取其链上 idOnChain 和 链上账户余额
+    如果获取不到链上账户内容，则更新当前 user 的状态为非法态
+    """
+    while True:
+        users = User.query.all()
+        for user in users:
+            idOnChain = user.
 
 def sync_resource():
     pass

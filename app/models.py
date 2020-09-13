@@ -119,6 +119,9 @@ class Resource(db.Model):
             'issuer': self.issuer.username
         }
 
+class StatusOnChain(Enum):
+    VALID = 0
+    INVALID = 1
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -134,6 +137,7 @@ class User(UserMixin, db.Model):
     account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    statusOnChain = db.Column(db.Integer, default=StatusOnChain.VALID) # 0 是正常态，否则是非法态
     resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan",)
     certs = db.relationship('Certs', backref='user', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan")
 

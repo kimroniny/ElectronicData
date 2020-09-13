@@ -193,5 +193,10 @@ class UserModelCase(unittest.TestCase):
         db.session.commit()
         print(User.query.first().email)
 
+    # def test_nokey(self):
+    #     Certs(resource_id=1, user_id=2, timestamp_pay=datetime.utcnow(),value)
+        
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)
