@@ -40,11 +40,19 @@ class UserModelCase(unittest.TestCase):
         db.session.add(u2)
         db.session.add(res)
         db.session.commit()
-
-        u2.buy_res(res)
+        cert1 = Certs(resource=res,user=u2,value=500)
+        cert2 = Certs(resource=res,user=u2,value=500)
+        db.session.add(cert1)
+        db.session.add(cert2)
         db.session.commit()
-        self.assertEqual(Certs.query.all()[0].payer_id, 2)
-        
+        self.assertEqual(u2.certs.count(), 2)
+        self.assertEqual(res.certs.count(), 2)
+        db.session.delete(res)
+        db.session.delete(u2)
+        db.session.commit()
+        # self.assertEqual(User.query.count(), 2)
+        # self.assertEqual(u2.certs.count(), 1)
+        self.assertEqual(Certs.query.count(), 0)
 
     def test_transfer(self):
         u1 = User(username='asdf', email='asdf@qq.com')
@@ -76,7 +84,7 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(u1.id, 1)
         self.assertEqual(res.id, 1)
         db.session.delete(u1)
-        # db.session.commit()
+        db.session.commit()
         self.assertTrue(len(User.query.all())==0)
         self.assertTrue(len(Resource.query.all())==1)
         # self.assertEqual(res.id, 1)

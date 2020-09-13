@@ -28,18 +28,11 @@ def getPrice(context):
     return Resource.query.filter_by(id=resource_id).first().price
 
 class Certs(db.Model):
-    """
-    TODO
-    用户或者募捐项目被删除，要不要把对应的捐款记录也删除掉呢？
-    目前暂时按照"删除"来处理，但是TMD不起效果！！！
-    """
     __tablename__ = 'certs'
 
     id = db.Column(db.Integer, primary_key=True)
     resource_id = db.Column(db.Integer, db.ForeignKey('resource.id', ondelete='CASCADE')) # 募捐项目的id
-    # resource = db.relationship('Resource', backref=db.backref('certs', passive_deletes='all'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')) # 捐款人用户的id
-    # user = db.relationship('User', backref=db.backref('certs', passive_deletes='all'))
+    payer_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')) # 捐款人用户的id
     timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
     value = db.Column(db.Integer, default=0) # 捐款金额
 
@@ -47,10 +40,10 @@ class Certs(db.Model):
     #     return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self):
-        return '<Certs {}: resource_id, {}; user_id, {}; value, {}; time: {}>'.format(
+        return '<Certs {}: resource_id, {}; payer_id, {}; value, {}; time: {}>'.format(
             self.id, 
             self.resource_id,
-            self.user_id,
+            self.payer_id,
             self.value,
             self.timestamp_pay
             )
@@ -59,6 +52,7 @@ class Certs(db.Model):
         return {
             'id': self.id,
             'resource_id': self.resource_id,
+            'payer_id': self.transfer_id,
             'timestamp_pay': self.transtamp_pay,
             'value': self.value
         }
@@ -89,9 +83,7 @@ class Resource(db.Model):
     filename = db.Column(db.String(100))
     infoHash = db.Column(db.String(100))
     status = db.Column(db.Integer, default=ResourceStatus.WAIT.value)
-    certs = db.relationship('Certs', backref='resource', lazy='dynamic', passive_deletes=True, cascade="all, delete-orphan")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
-
 
     def __repr__(self):
         return '<Resource {}>'.format(self.body)
@@ -118,6 +110,14 @@ class Resource(db.Model):
         }
 
 
+def generate_pub_key(context):
+    email = context.get_current_parameters()['email']
+    return keccak.new(data=email.encode(), digest_bits=256).hexdigest()
+
+def generate_addr(context):
+    email = context.get_current_parameters()['email']
+    return keccak.new(data=email.encode(), digest_bits=256).hexdigest()[24:]
+
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
 
@@ -132,8 +132,15 @@ class User(UserMixin, db.Model):
     account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
-    resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan",)
-    certs = db.relationship('Certs', backref='user', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan")
+    resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True)
+    res_bought = db.relationship(
+        'Resource', 
+        secondary="certs",
+        primaryjoin=('certs.c.payer_id == User.id'),
+        secondaryjoin=('certs.c.resource_id == Resource.id'),
+        backref=db.backref('payer', lazy='dynamic'), 
+        lazy='dynamic', passive_deletes=True
+    )
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -151,6 +158,9 @@ class User(UserMixin, db.Model):
         digest = md5(self.username.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
+    
+    def buy_res(self, resource):
+        self.res_bought.append(resource)
         
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(

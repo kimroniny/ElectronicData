@@ -100,6 +100,7 @@ def issue():
     '''
     首先计算文件的哈希值
     首先要向链上注册
+    TODO 这里要发送链上账户密码进行解锁
     '''
     form = ResIssueForm()
     if form.validate_on_submit():
@@ -162,9 +163,31 @@ def res_donate():
             unlockFlag = charitySDK.unlockAccount(current_user.address, password=password) # 默认解锁时间为300s
             if unlockFlag:
                 raise Exception("链上账户解锁失败")
-            donateresult = charitySDK.donate(charityId=resid,value=money,sender=current_user.address)
+            resource = Resource.query.filter_by(id=resid).first()
+            donateresult = charitySDK.donate(charityId=resource['idOnChain'],value=money,sender=current_user.address)
             if donateresult['code'] != 0:
                 raise Exception(donateresult['err'])
+            """
+            uint id,
+            uint charityId,
+            uint idInUser,
+            uint idInCharity,
+            uint money,
+            uint timestamp,
+            address donator
+            """
+            fundInfo = donateresult['msg']
+            fund_idOnChain = fundInfo['id']
+            fund_charityIdOnChain = fundInfo['charityId'],
+            fund_idInUserOnChain = fundInfo['idInUser'],
+            fund_idInCharityOnChain = fundInfo['idInCharity'],
+            fund_value = fundInfo['money'],
+            fund_timestamp_pay = fundInfo['timestamp']
+            fund_payer = current_user
+            Certs(
+                
+            )
+            
         else:
             raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
     except Exception as e:
