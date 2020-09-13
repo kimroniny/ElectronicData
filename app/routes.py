@@ -116,6 +116,13 @@ def issue():
         endTime = form.formatDatetimeToTimestamp()
         money = form.formatPriceToInt()
         filename = resfile.filename
+        password = form.password.data
+        if not current_user.check_account_password(password):
+            raise Exception("链上账户解锁密码错误")
+        unlockFlag = charitySDK.unlockAccount(
+            current_user.address, password=password)  # 默认解锁时间为300s
+        if not unlockFlag:
+            raise Exception("链上账户解锁失败")
         charityInfo, err = sdk.createCharity(
             endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
         if not charityInfo:
@@ -158,7 +165,7 @@ def issue():
 @login_required
 def res_donate():
     try:
-        result = {
+        front_end_response = {
             'code': 0,
             'msg': 'success',
             'err': ''
@@ -170,20 +177,20 @@ def res_donate():
                 raise Exception("链上账户解锁密码错误")
             unlockFlag = charitySDK.unlockAccount(
                 current_user.address, password=password)  # 默认解锁时间为300s
-            if unlockFlag:
+            if not unlockFlag:
                 raise Exception("链上账户解锁失败")
             resource = Resource.query.filter_by(id=resid).first()
             donateresult = charitySDK.donate(
-                charityId=resource['idOnChain'], value=money, sender=current_user.address)
+                charityId=resource.idOnChain, value=money, sender=current_user.address)
             if donateresult['code'] != 0:
                 raise Exception(donateresult['err'])
-
+            print("donate {}ED success".format(money))
             fundInfo = donateresult['msg']
             fund_idOnChain = fundInfo['id']
-            fund_charityIdOnChain = fundInfo['charityId'],
-            fund_idInUserOnChain = fundInfo['idInUser'],
-            fund_idInCharityOnChain = fundInfo['idInCharity'],
-            fund_value = fundInfo['money'],
+            fund_charityIdOnChain = fundInfo['charityId']
+            # fund_idInUserOnChain = fundInfo['idInUser'],
+            # fund_idInCharityOnChain = fundInfo['idInCharity'],
+            fund_value = fundInfo['money']
             fund_timestamp_pay = fundInfo['timestamp']
             fund_payer = fundInfo['donator']
             resource = Resource.query.filter_by(
@@ -197,6 +204,7 @@ def res_donate():
             )
             db.session.add(cert)
             db.session.commit()
+            print("donate record has been written to db")
             result, err = charitySDK.getCharityById(fund_charityIdOnChain)
             if err:
                 raise Exception("getCharityById({}) failed, err: {}".format(
@@ -206,7 +214,8 @@ def res_donate():
             if hasMoney and status:
                 resource.has_price = int(hasMoney)
                 resource.status = int(status)
-                db.commit()
+                db.session.commit()
+                print("update charity status")
                 # db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update(
                 #     {'has_price': int(hasMoney), 'status': status})
             else:
@@ -215,10 +224,10 @@ def res_donate():
         else:
             raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
     except Exception as e:
-        result.update({'code': 101, 'msg': "error", 'err': str(e)})
+        front_end_response.update({'code': 101, 'msg': "error", 'err': str(e)})
         print(traceback.format_exc())
     finally:
-        return json.dumps(result)
+        return json.dumps(front_end_response)
 
 
 # 数据资源详情
@@ -358,9 +367,12 @@ def my_res_donate():
     ).order_by(Certs.timestamp_pay.desc()).all()
     for cert in certs:
         res = Resource.query.filter_by(id=cert.resource_id).first()
-        res.donate_timestamp = cert.timestamp_pay
-        res.donate_price = cert.value
-        result.append(res)
+        result.append({
+            'res':res,
+            'donate_timestamp': cert.timestamp_pay,
+            'donate_price': cert.value
+        })
+
     return render_template(
         'myres/res_donate.html',
         resources=result

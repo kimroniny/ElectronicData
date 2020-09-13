@@ -8,26 +8,29 @@
 {% endblock %} {% block script %}
 <script type="text/javascript">
 </script>
-{% endblock %} {% block content %} {% if resources %} {% for resource in resources %}
+{% endblock %} 
+{% block content %} 
+{% if resources %} 
+{% for resource in resources %}
 <div class="col-sm-12 col-lg-10 col-lg-offset-1">
     <div class="panel panel-white">
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img alt="user profile image" class="user-profile-image" src="{{ resource.avatar(128) }}" />
+                    <img alt="user profile image" class="user-profile-image" src="{{ resource.res.avatar(128) }}" />
                 </div>
                 <div class="col-md-10">
                     <p class="lead">
-                        <a href="{{ url_for('res_detail', resid=resource.id) }}">{{resource.title}}</a>
+                        <a href="{{ url_for('res_detail', resid=resource.res.id) }}">{{resource.res.title}}</a>
                     </p>
-                    <p>{{ resource.body }}</p>
+                    <p>{{ resource.res.body }}</p>
                 </div>
             </div>
             <hr />
             <div class="row">
                 <div class="col-md-4">
                     受捐人地址：
-                    <a href="{{ url_for('user', userid=resource.issuer.id) }}">{{resource.issuer.address}}</a>
+                    <a href="{{ url_for('user', userid=resource.res.issuer.id) }}">{{resource.res.issuer.address}}</a>
                 </div>
                 <div class="col-md-5">
                     捐款时间：{{resource.donate_timestamp}}
@@ -81,7 +84,7 @@
 {% else %}
 <div class="col-sm-12 col-lg-10 col-lg-offset-1">
     <div class="alert alert-warning" role="alert">
-        <strong>您尚未有捐款记录</strong>
+        <strong>您尚未有捐款记录，想要捐爱心，就去 <a href="{{url_for('index')}}">网站首页</a> 看看吧</strong>
     </div>
 </div>
 {% endif %} {% endblock %}

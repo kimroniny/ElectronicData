@@ -24,7 +24,7 @@
             data: datas,
             dataType: "json",
             beforeSend: function(XMLHttpRequest) {
-                $("#donateSpan").hide();
+                $("#donateSpan").disabled = true;
                 $("#donateLoading").show();
                 var start = new Date().getTime();
                 console.log(start);
@@ -36,6 +36,7 @@
                 console.log("complete");
             },
             success: function(data) {
+                data = JSON.parse(data);
                 if (data["code"] == 0) {
                     // document.getElementById("transfer_msg_success").innerHTML =
                     //     data["msg"];
@@ -131,6 +132,9 @@
                                     <div class="text-center" id="donateLoading">
                                         <div class="spinner-border" role="status">
                                             <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <span>正在区块链上记录您的爱心，Thanks♪(･ω･)ﾉ</span>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">

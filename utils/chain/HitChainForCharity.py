@@ -83,7 +83,7 @@ class CharitySdk(HitSdk):
             print(traceback.format_exc())
             return {}
     
-    def createCharity(self, endTime, money, infoHash, owner, password):
+    def createCharity(self, endTime, money, infoHash, owner, password=""):
         """
         TODO 把账户解锁调整到该层来实现
         创建募捐项目，并返回项目信息
@@ -175,7 +175,7 @@ class CharitySdk(HitSdk):
             'endTime',
             'targetMoney',
             'hasMoney',
-            'infoHash'
+            'infoHash',
             'status',
             'owner',
         ]
@@ -186,7 +186,8 @@ class CharitySdk(HitSdk):
                 exec_type=ContractExecType.CONTRACT_CALL,
             )
             if err: raise Exception("getCharityById Failed! ERROR: {}".format(err))
-            if len(result) != len(keys): raise Exception("getCharityById len(result) != len(keys), pls check the keys")
+            if len(result) != len(keys): 
+                raise Exception("getCharityById len(result) != len(keys), pls check the keys, result keys are: {}".format(result))
             return {key: val for key, val in zip(keys, result)}, ""
         except Exception as e:
             print(traceback.format_exc())

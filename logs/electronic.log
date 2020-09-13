@@ -1,4 +1,4 @@
-2020-09-13 21:04:24,540 ERROR: Exception on /withdraw [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-13 22:20:15,610 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,9 +14,34 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 31, in wrapped
-    return f(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 424, in withdraw
-    money=form.amount.data, addr=current_user.address)
-TypeError: withdraw() missing 1 required positional argument: 'password'
-2020-09-13 21:05:04,360 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 379, in my_res_donate
+    resources=result
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 1, in top-level template code
+    {% extends "base/base.html" %} {% block styles %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 14, in root
+    {% for resource in resources %}
+  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 79, in root
+    "hideDuration": "1000",
+  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 46, in block_content
+    </div>
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 630, in _fail_with_undefined_error
+    raise self._undefined_exception(hint)
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'avatar'
+2020-09-13 22:21:04,029 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 22:21:48,097 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

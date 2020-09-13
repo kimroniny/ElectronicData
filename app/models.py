@@ -43,6 +43,7 @@ class Certs(db.Model):
     # user = db.relationship('User', backref=db.backref('certs', passive_deletes='all'))
     timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
     value = db.Column(db.Integer, default=0) # 捐款金额
+    idOnchain = db.Column(db.Integer)
 
     # def format_timestamp_pay(self):
     #     return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')

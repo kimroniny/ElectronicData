@@ -85,6 +85,7 @@ class ResIssueForm(FlaskForm):
     price = IntegerField('募捐金额', validators=[DataRequired()])
     endTime = DateTimeField('截止时间', validators=[DataRequired()], format="%Y/%m/%d %H:%M")
     resfile = FileField('证明文件', validators=[FileRequired()])
+    password = PasswordField('链上账户密码', validators=[DataRequired()])
     submit = SubmitField('确定提交')
 
     def validate_price(self, price):
@@ -135,11 +136,11 @@ class ResDonateForm(FlaskForm):
     submit = SubmitField("确认转账")
 
 class ChargeForm(FlaskForm):
-    amount = IntegerField('充值金额(ED)', validators=[NumberRange(1, 1000000), DataRequired()])
+    amount = IntegerField('充值金额(ED)', validators=[NumberRange(1, 2**20), DataRequired()])
     paypwd = PasswordField('链上账户密码', validators=[DataRequired()])
     submit = SubmitField('充值')
 
 class WithdDraw(FlaskForm):
-    amount = IntegerField('提现金额', validators=[NumberRange(1, 1000), DataRequired()])
+    amount = IntegerField('提现金额', validators=[NumberRange(1, 2**20), DataRequired()])
     paypwd = PasswordField('链上账户密码', validators=[DataRequired()])
     submit = SubmitField('提现')
