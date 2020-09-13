@@ -15,7 +15,10 @@ from utils.hash.filehash import FilesHash
 from datetime import datetime
 from functools import wraps
 from io import BytesIO
-import json, os, pathlib, traceback
+import json
+import os
+import pathlib
+import traceback
 
 
 def checkPayPwd(f):
@@ -55,6 +58,7 @@ def index():
         'index', page=resources.prev_num) if resources.has_prev else None
     return render_template('index.html', title='首页', resources=resources.items, next_url=next_url, prev_url=prev_url)
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -72,6 +76,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('sign/register.html', title='Register', form=form)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -86,6 +91,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('sign/login.html', title='Sign In', form=form)
+
 
 @app.route('/logout')
 def logout():
@@ -110,7 +116,8 @@ def issue():
         endTime = form.formatDatetimeToTimestamp()
         money = form.formatPriceToInt()
         filename = resfile.filename
-        charityInfo, err = sdk.createCharity(endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
+        charityInfo, err = sdk.createCharity(
+            endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
         if not charityInfo:
             flash(message="0,"+err)
             return render_template('issue/res.html', title="issue resource", form=form)
@@ -157,14 +164,17 @@ def res_donate():
             'err': ''
         }
         if request.method == "POST":
-            money, password, resid = int(request.form['money']), request.form['password'], int(request.form['resid'])
+            money, password, resid = int(
+                request.form['money']), request.form['password'], int(request.form['resid'])
             if not current_user.check_account_password(password):
                 raise Exception("链上账户解锁密码错误")
-            unlockFlag = charitySDK.unlockAccount(current_user.address, password=password) # 默认解锁时间为300s
+            unlockFlag = charitySDK.unlockAccount(
+                current_user.address, password=password)  # 默认解锁时间为300s
             if unlockFlag:
                 raise Exception("链上账户解锁失败")
             resource = Resource.query.filter_by(id=resid).first()
-            donateresult = charitySDK.donate(charityId=resource['idOnChain'],value=money,sender=current_user.address)
+            donateresult = charitySDK.donate(
+                charityId=resource['idOnChain'], value=money, sender=current_user.address)
             if donateresult['code'] != 0:
                 raise Exception(donateresult['err'])
 
@@ -177,7 +187,8 @@ def res_donate():
             fund_timestamp_pay = fundInfo['timestamp']
             fund_payer = fundInfo['donator']
             cert = Certs(
-                resource=Resource.query.filter_by(idOnChain=fund_charityIdOnChain).first(),
+                resource=Resource.query.filter_by(
+                    idOnChain=fund_charityIdOnChain).first(),
                 user=User.query.filter_by(address=fund_payer).first(),
                 timestamp_pay=datetime.fromtimestamp(fund_timestamp_pay),
                 value=fund_value,
@@ -186,13 +197,17 @@ def res_donate():
             db.session.add(cert)
             db.session.commit()
             result, err = charitySDK.getCharityById(fund_charityIdOnChain)
-            if err: raise Exception("cgetCharityById({}) failed, err: {}".format(fund_charityIdOnChain, err)) 
+            if err:
+                raise Exception("getCharityById({}) failed, err: {}".format(
+                    fund_charityIdOnChain, err))
             hasMoney = result.get('hasMoney', None)
             status = result.get('status', None)
             if hasMoney and status:
-                db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update({'has_price': int(hasMoney), 'status':status})
+                db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update(
+                    {'has_price': int(hasMoney), 'status': status})
             else:
-                raise Exception("charity update hasMoney and status failed, ")
+                raise Exception(
+                    "charity update hasMoney and status failed, keys missing")
         else:
             raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
     except Exception as e:
@@ -243,8 +258,7 @@ def edit_profile():
                            form=form)
 
 
-
-
+# abandoned
 @app.route('/explore')
 @login_required
 def explore():
@@ -289,10 +303,12 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 
+# abandoned
 @app.route('/show_res_issue', methods=['POST'])
 @login_required
 def show_res_issue():
-    resources = current_user.resources.order_by(Resource.timestamp.desc()).all()
+    resources = current_user.resources.order_by(
+        Resource.timestamp.desc()).all()
     res = [resource.as_dict() for resource in resources]
     return json.dumps(res)
 
@@ -300,19 +316,21 @@ def show_res_issue():
 @app.route('/my_res_issue', methods=['GET', 'POST'])
 @login_required
 def my_res_issue():
-    resources = current_user.resources.order_by(Resource.timestamp.desc()).all()
+    resources = current_user.resources.order_by(
+        Resource.timestamp.desc()).all()
     return render_template(
         'myres/res_issue.html',
         resources=resources
     )
 
 
+#abandoned
 @app.route('/show_res_bought', methods=['POST'])
 @login_required
 def show_res_bought():
     result = []
     certs = Certs.query.filter(
-        Certs.payer_id == current_user.id, Certs.transfer_id == None
+        Certs.user_id == current_user.id, Certs.transfer_id == None
     ).order_by(Certs.timestamp_pay.desc()).all()
     for cert in certs:
         res = Resource.query.filter_by(
@@ -332,7 +350,7 @@ def show_res_bought():
 def my_res_donate():
     result = []
     certs = Certs.query.filter(
-        Certs.payer_id == current_user.id
+        Certs.user_id == current_user.id
     ).order_by(Certs.timestamp_pay.desc()).all()
     for cert in certs:
         res = Resource.query.filter_by(id=cert.resource_id).first()
@@ -345,12 +363,13 @@ def my_res_donate():
     )
 
 
+# abandoned
 @app.route('/show_res_transfer', methods=['POST'])
 @login_required
 def show_res_transfer():
     result = list()
     certs = Certs.query.filter(
-        Certs.payer_id == current_user.id, Certs.transfer_id != None
+        Certs.user_id == current_user.id, Certs.transfer_id != None
     ).order_by(Certs.timestamp_trans.desc()).all()
     for cert in certs:
         resource = Resource.query.filter_by(
@@ -366,27 +385,6 @@ def show_res_transfer():
         result.append(resource)
     return json.dumps(result)
 
-
-@app.route('/page_res_transfer', methods=['GET', 'POST'])
-@login_required
-def page_res_transfer():
-    result = list()
-    certs = Certs.query.filter(
-        Certs.payer_id == current_user.id, Certs.transfer_id != None
-    ).order_by(Certs.timestamp_trans.desc()).all()
-    for cert in certs:
-        resource = Resource.query.filter_by(id=cert.resource_id).first_or_404()
-        resource.pay_timestamp = cert.format_timestamp_pay()
-        resource.pay_timestamp_trans = cert.format_timestamp_trans()
-        resource.pay_transfer_to = User.query.filter_by(
-            id=cert.transfer_id).first()
-        result.append(resource)
-    return render_template(
-        'myres/res_transfer.html',
-        resources=result
-    )
-
-
 @app.route('/charge', methods=['GET', 'POST'])
 @login_required
 @checkPayPwd
@@ -394,7 +392,8 @@ def charge():
     form = ChargeForm()
     if form.validate_on_submit():
         if current_user.check_account_password(form.paypwd.data):
-            result = charitySDK.charge(money=form.amount.data, addr=current_user.address)
+            result = charitySDK.charge(
+                money=form.amount.data, addr=current_user.address)
             if result:
                 flash('1,充值成功，充值金额: {}ED'.format(form.amount.data))
             else:
@@ -415,7 +414,8 @@ def withdraw():
     form = WithdDraw()
     if form.validate_on_submit():
         if current_user.check_account_password(form.paypwd.data):
-            result = charitySDK.withdraw(money=form.amount.data, addr=current_user.address)
+            result = charitySDK.withdraw(
+                money=form.amount.data, addr=current_user.address)
             if result == 0:
                 flash('1,提现成功，提现金额: {}ED'.format(form.amount.data))
             elif -1 == result:
@@ -432,6 +432,8 @@ def withdraw():
         title='withdraw'
     )
 
+
+# abandoned
 @app.route('/download/<resid>', methods=['GET'])
 @app.route('/download/<resid>/<filename>', methods=['GET'])
 @login_required
@@ -450,30 +452,29 @@ def download_res(resid, filename=None):
             )
     abort(404)
 
+
 @app.route('/trace_donate/<resid>', methods=['GET', 'POST'])
 @login_required
 def trace_donate(resid):
-    certs = Certs.query.filter(Certs.resource_id==resid).all()
+    resource = Resource.query.filter(Resource.id==resid).first_or_404()
+    certs = Certs.query.filter(Certs.resource_id == resid).order_by(Certs.timestamp_pay.desc()).all()
     result = []
     for cert in certs:
-        payer = User.query.filter_by(id==cert.payer_id).first();
-        result.append(
-            {
-                'time': cert.timestamp_pay,
-                'payer': payer if payer is not None else "illegal user",
-                'receiver': current_user,
-                'value': cert.value
-            }
-        )
+        result.append({
+            'address': cert.user.address,
+            'timestamp': cert.timestamp_pay,
+            'value': cert.value
+        })
+    donatee_address = resource.issuer.address
     return render_template(
         'trace/trace.html',
         title='trace_record',
-        res_title = Resource.query.filter_by(id=resid).first().title,
+        res_title=Resource.query.filter_by(id=resid).first().title,
+        donatee=donatee_address,
         result=result,
         enumerate=enumerate,
-        userid=current_user.id,
-        resid=resid
     )
+
 
 @app.route('/code')
 def get_capture_code():
@@ -488,6 +489,7 @@ def get_capture_code():
     # 将验证码字符串储存在session中
     session['image'] = code
     return response
+
 
 @app.route('/registechain', methods=['GET', 'POST'])
 def register_chain_account():
@@ -511,5 +513,3 @@ def register_chain_account():
         form=form,
         title="注册链上账户"
     )
-
-

@@ -4,6 +4,11 @@
         margin-top: 10px;
         margin-bottom: 10px
     }
+    #donatee {
+        color: #0720d2;
+        font-size: 16px;
+        font-weight: 600;
+    }
 </style>
 {% endblock %} {% block script %}
 <script type="text/javascript">
@@ -16,34 +21,44 @@
             <h4 class="panel-title">募捐项目"{{res_title}}"的捐款明细</h4>
         </div>
         <div class="panel-body">
-            <table class="table table-hover" id="trace_table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>受捐人地址</th>
-                        <th>捐款人地址</th>
-                        <th>捐款时间</th>
-                        <th>捐款金额(ED)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if result %} {% for idx, cert in enumerate(result) %}
-                    <tr>
-                        <th scope="row">idx</th>
-                        <td>{{cert.receiver.address}}</td>
-                        <td>{{cert.payer.address}}</td>
-                        <td>{{cert.time}}</td>
-                        <td>{{cert.value}}</td>
-                    </tr>
-                    {% endfor %} {% else %}
-                    <td colspan="7">
-                        {% if type=='buy' %} 无被购买记录 {% elif type=='trans' %} 用户 "{{username}}" 持有该资源的访问凭证，无转让记录 {% endif %}
-                    </td>
-                    {% endif %}
-
-
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12" id="donatee">
+                    <span>受捐人地址：</span>
+                    <span>{{donatee}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-hover" id="trace_table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>捐款人地址</th>
+                                <th>捐款金额(ED)</th>
+                                <th>捐款时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if result %} 
+                                {% for idx, cert in enumerate(result) %}
+                                <tr>
+                                    <th scope="row">idx</th>
+                                    <td>{{cert.address}}</td>
+                                    <td>{{cert.value}}</td>
+                                    <td>{{cert.timestamp}}</td>
+                                </tr>
+                                {% endfor %} 
+                            {% else %}
+                            <td colspan="7">
+                                该项目暂时无人捐款
+                            </td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            
         </div>
     </div>
 </div>

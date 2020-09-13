@@ -50,3 +50,49 @@ IndexError: tuple index out of range
 2020-09-13 17:24:16,720 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-13 17:25:37,070 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-13 17:26:17,564 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:42:05,024 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:42:11,195 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:42:17,352 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:42:25,495 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:52:37,647 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 352, in my_res_donate
+    Certs.payer_id == current_user.id
+AttributeError: type object 'Certs' has no attribute 'payer_id'
+2020-09-13 19:56:28,512 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 19:56:39,308 ERROR: Exception on /page_res_transfer [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 394, in page_res_transfer
+    Certs.payer_id == current_user.id, Certs.transfer_id != None
+AttributeError: type object 'Certs' has no attribute 'payer_id'
+2020-09-13 19:57:17,902 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 20:12:22,275 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-13 20:16:00,506 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
