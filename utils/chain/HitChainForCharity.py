@@ -152,13 +152,46 @@ class CharitySdk(HitSdk):
     def getUserByIdOnChain(self, idOnChain):
         """根据 idOnChain 获取链上用户信息
         result 的结果对应字段是：
-            uint indexed id,
             address indexed addr
 
         Args:
             idOnChain ([type]): [description]
         """
-        pass
+        try:
+            result, _, err = self.operate(
+                func_name='getUserById',
+                func_args=[idOnChain],
+                exec_type=ContractExecType.CONTRACT_CALL,
+            )
+            if err: raise Exception("getUserById Failed! ERROR: {}".format(err))
+            return result, ""
+        except Exception as e:
+            print(traceback.format_exc())
+            return "", str(e)        
+
+    def getCharityNum(self):
+        try:
+            result, _, err = self.operate(
+                func_name='getCharityAllNumber',
+                exec_type=ContractExecType.CONTRACT_CALL,
+            )
+            if err: raise Exception("getCharityNum Failed! ERROR: {}".format(err))
+            return result, ''
+        except Exception as e:
+            print(traceback.format_exc())
+            return -1, str(e)        
+    
+    def getFundNum(self):
+        try:
+            result, _, err = self.operate(
+                func_name='getFundAllNum',
+                exec_type=ContractExecType.CONTRACT_CALL,
+            )
+            if err: raise Exception("getFundAllNum Failed! ERROR: {}".format(err))
+            return result, ''
+        except Exception as e:
+            print(traceback.format_exc())
+            return -1, str(e)        
 
     def getCharityByIdOnChain(self, charityIdOnChain):
         """根据 charityIdOnChain 获取charity的信息
@@ -261,5 +294,6 @@ class CharitySdk(HitSdk):
 
 if __name__ == "__main__":
     sdk = CharitySdk()
-    result = sdk.donate(8,100,'0x5915b5b28727C6876d157f5de344A2fc498eE6f4')
+    # result = sdk.donate(8,100,'0x5915b5b28727C6876d157f5de344A2fc498eE6f4')
+    result = sdk.getCharityNum()
     print(result)

@@ -28,6 +28,10 @@ def getPrice(context):
     resource_id = context.get_current_parameters()['resource_id']
     return Resource.query.filter_by(id=resource_id).first().price
 
+class StatusOnChain:
+    VALID = 0
+    INVALID = 1
+
 class Certs(db.Model):
     """
     TODO
@@ -41,21 +45,27 @@ class Certs(db.Model):
     # resource = db.relationship('Resource', backref=db.backref('certs', passive_deletes='all'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')) # 捐款人用户的id
     # user = db.relationship('User', backref=db.backref('certs', passive_deletes='all'))
-    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
+    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.now) # 捐款时间
     value = db.Column(db.Integer, default=0) # 捐款金额
     idOnchain = db.Column(db.Integer)
+    updatetime = db.Column(db.DateTime)
+    statusOnChain = db.Column(db.Integer)
 
     # def format_timestamp_pay(self):
     #     return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self):
-        return '<Certs {}: resource_id, {}; user_id, {}; value, {}; time: {}>'.format(
-            self.id, 
-            self.resource_id,
-            self.user_id,
-            self.value,
-            self.timestamp_pay
-            )
+        return {
+            'id': self.id,
+            'resource_id': self.resource_id,
+            'user_id': self.user_id,
+            'timestamp_pay': self.timestamp_pay,
+            'value': self.value,
+            'idOnChain': self.idOnchain,
+            'updatetime': self.updatetime,
+            'statusOnChain': self.statusOnChain
+        }
+
     
     def as_dict(self):
         return {
@@ -86,17 +96,24 @@ class Resource(db.Model):
     price = db.Column(db.Integer, default=1)
     has_price = db.Column(db.Integer, default=0)
     endTime = db.Column(db.DateTime)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     updatetime = db.Column(db.DateTime)
     filename = db.Column(db.String(100))
     infoHash = db.Column(db.String(100))
-    status = db.Column(db.Integer, default=ResourceStatus.WAIT.value)
+    status = db.Column(db.Integer, default=ResourceStatus.WAIT.value) # 这个状态是募捐项目进行的状态
+    statusOnChain = db.Column(db.Integer, default=StatusOnChain.VALID) # 这个状态是链上链下项目是否验证一致的状态
     certs = db.relationship('Certs', backref='resource', lazy='dynamic', passive_deletes=True, cascade="all, delete-orphan")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
 
 
     def __repr__(self):
-        return '<Resource {}>'.format(self.body)
+        return {
+            'id': self.id,
+            'idOnChain': self.idOnChain,
+            'issuer': self.user_id,
+            'infoHash': self.infoHash,
+            'statusOnChain': self.statusOnChains
+        }
 
     def avatar(self, size):
         digest = md5(self.title.encode('utf-8')).hexdigest()
@@ -119,9 +136,7 @@ class Resource(db.Model):
             'issuer': self.issuer.username
         }
 
-class StatusOnChain(Enum):
-    VALID = 0
-    INVALID = 1
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -136,8 +151,9 @@ class User(UserMixin, db.Model):
     address = db.Column(db.String(42), unique=True)
     account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.now)
     statusOnChain = db.Column(db.Integer, default=StatusOnChain.VALID) # 0 是正常态，否则是非法态
+    updatetime = db.Column(db.DateTime)
     resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan",)
     certs = db.relationship('Certs', backref='user', lazy='dynamic', passive_deletes=True,cascade="all, delete-orphan")
 
@@ -180,6 +196,13 @@ class User(UserMixin, db.Model):
     
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return {
+            'id': self.id,
+            'username': self.username,
+            'idOnChain': self.idOnChain,
+            'address': self.address,
+            'balance': self.balance,
+            'statusOnChain': self.statusOnChain
+        }
 
 

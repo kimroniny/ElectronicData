@@ -33,7 +33,7 @@ class Certs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     resource_id = db.Column(db.Integer, db.ForeignKey('resource.id', ondelete='CASCADE')) # 募捐项目的id
     payer_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')) # 捐款人用户的id
-    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.utcnow) # 捐款时间
+    timestamp_pay = db.Column(db.DateTime, index=True, default=datetime.now) # 捐款时间
     value = db.Column(db.Integer, default=0) # 捐款金额
 
     # def format_timestamp_pay(self):
@@ -78,7 +78,7 @@ class Resource(db.Model):
     price = db.Column(db.Integer, default=1)
     has_price = db.Column(db.Integer, default=0)
     endTime = db.Column(db.DateTime)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     updatetime = db.Column(db.DateTime)
     filename = db.Column(db.String(100))
     infoHash = db.Column(db.String(100))
@@ -131,7 +131,7 @@ class User(UserMixin, db.Model):
     address = db.Column(db.String(42), unique=True)
     account_password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.now)
     resources = db.relationship('Resource', backref='issuer', lazy='dynamic', passive_deletes=True)
     res_bought = db.relationship(
         'Resource', 

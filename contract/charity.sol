@@ -63,6 +63,11 @@ contract Electronic {
         emit UserInfo(userAddrs.length-1, _addr.balance, _addr);
     }
 
+    function getUserById(uint userId) view public returns (address) {
+        require(userId < userAddrs.length, "userId can not be larger than users.length");
+        return userAddrs[userId]
+    } 
+
     function getUserNumber() view public returns (uint) {
         return userAddrs.length;
     }
@@ -242,6 +247,10 @@ contract Electronic {
             fund.timestamp,
             fund.donator
         );
+    }
+
+    function getFundAllNum() view public returns(uint) {
+        return funds.length;
     }
 
     fallback () external payable {

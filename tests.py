@@ -192,9 +192,16 @@ class UserModelCase(unittest.TestCase):
         u1.email = 'as@qq.com'
         db.session.commit()
         print(User.query.first().email)
+    
+    def test_update_cert(self):
+        cert = Certs(resource_id=1, user_id=2, timestamp_pay=datetime.now(),value=10,idOnchain=1)
+        db.session.add(cert)
+        db.session.commit()
+        c = Certs.query.first()
+        self.assertEqual(c.value, 10)
 
     # def test_nokey(self):
-    #     Certs(resource_id=1, user_id=2, timestamp_pay=datetime.utcnow(),value)
+    #     Certs(resource_id=1, user_id=2, timestamp_pay=datetime.now(),value)
         
 
 
