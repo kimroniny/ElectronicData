@@ -26,9 +26,9 @@ def checkPayPwd(f):
     def wrapped(*args, **kwargs):
         if current_user.account_password_hash == None:
             flash("0,充值、提现、捐款操作请首先创建链上账户")
-            return redirect(url_for('user', userid=current_user.id))
-        else:
-            return f(*args, **kwargs)
+            # return redirect(url_for('user', userid=current_user.id))
+        # else:
+        return f(*args, **kwargs)
     return wrapped
 
 
@@ -186,9 +186,10 @@ def res_donate():
             fund_value = fundInfo['money'],
             fund_timestamp_pay = fundInfo['timestamp']
             fund_payer = fundInfo['donator']
+            resource = Resource.query.filter_by(
+                    idOnChain=fund_charityIdOnChain).first()
             cert = Certs(
-                resource=Resource.query.filter_by(
-                    idOnChain=fund_charityIdOnChain).first(),
+                resource=resource,
                 user=User.query.filter_by(address=fund_payer).first(),
                 timestamp_pay=datetime.fromtimestamp(fund_timestamp_pay),
                 value=fund_value,
@@ -203,8 +204,11 @@ def res_donate():
             hasMoney = result.get('hasMoney', None)
             status = result.get('status', None)
             if hasMoney and status:
-                db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update(
-                    {'has_price': int(hasMoney), 'status': status})
+                resource.has_price = int(hasMoney)
+                resource.status = int(status)
+                db.commit()
+                # db.session.query(Resource).filter_by(idOnChain=fund_charityIdOnChain).update(
+                #     {'has_price': int(hasMoney), 'status': status})
             else:
                 raise Exception(
                     "charity update hasMoney and status failed, keys missing")
@@ -396,6 +400,8 @@ def charge():
                 money=form.amount.data, addr=current_user.address)
             if result:
                 flash('1,充值成功，充值金额: {}ED'.format(form.amount.data))
+                current_user.balance = charitySDK.getAccountBalance(current_user.address)
+                db.session.commit()
             else:
                 flash('0,充值失败')
         else:
@@ -415,9 +421,11 @@ def withdraw():
     if form.validate_on_submit():
         if current_user.check_account_password(form.paypwd.data):
             result = charitySDK.withdraw(
-                money=form.amount.data, addr=current_user.address)
+                money=form.amount.data, addr=current_user.address, password=form.paypwd.data)
             if result == 0:
                 flash('1,提现成功，提现金额: {}ED'.format(form.amount.data))
+                current_user.balance = charitySDK.getAccountBalance(current_user.address)
+                db.session.commit()
             elif -1 == result:
                 flash("0,链上账户余额不足")
             elif -2 == result:

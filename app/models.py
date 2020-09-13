@@ -172,6 +172,7 @@ class User(UserMixin, db.Model):
         user = User.query.filter_by(address=address).first()
         return user['id']
 
+    
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

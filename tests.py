@@ -181,6 +181,17 @@ class UserModelCase(unittest.TestCase):
         self.assertFalse(
             path.is_file()
         )
+    
+    def test_update(self):
+        u1 = User(username='asdf', email='asdf@qq.com')
+        db.session.add(u1)
+        db.session.commit()
+        print(User.query.first().email)
+        u2 = User(username='asdf', email='as@qq.com')
+        # db.session.query(User).filter_by(username='asdf').update({'email': 'as@qq.com'})
+        u1.email = 'as@qq.com'
+        db.session.commit()
+        print(User.query.first().email)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
