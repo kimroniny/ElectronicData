@@ -1,4 +1,19 @@
-2020-09-13 22:20:15,610 ERROR: Exception on /my_res_donate [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-14 09:57:19,815 ERROR: Exception on /issue [POST] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
+    res = self._query(query)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
+    db.query(q)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1062, "Duplicate entry '3' for key 'ix_resource_idOnChain'")
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,35 +29,67 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 379, in my_res_donate
-    resources=result
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
-    ctx.app,
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
-    rv = template.render(context)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 144, in issue
+    db.session.commit()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 1027, in commit
+    self.transaction.commit()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 494, in commit
+    self._prepare_impl()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 473, in _prepare_impl
+    self.session.flush()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2470, in flush
+    self._flush(objects)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2608, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2568, in _flush
+    flush_context.execute()
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1137, in _emit_insert_statements
+    statement, params
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1253, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1473, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 1, in top-level template code
-    {% extends "base/base.html" %} {% block styles %}
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1005, in render
-    return concat(self.root_render_func(self.new_context(vars)))
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 14, in root
-    {% for resource in resources %}
-  File "/home/kr/workspace/ElectronicData/app/templates/base/base.html", line 79, in root
-    "hideDuration": "1000",
-  File "/home/kr/workspace/ElectronicData/app/templates/myres/res_donate.html", line 46, in block_content
-    </div>
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 262, in call
-    return __obj(*args, **kwargs)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/runtime.py", line 630, in _fail_with_undefined_error
-    raise self._undefined_exception(hint)
-jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'avatar'
-2020-09-13 22:21:04,029 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 22:21:48,097 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 22:50:38,301 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1249, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 580, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 209, in execute
+    res = self._query(query)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/cursors.py", line 315, in _query
+    db.query(q)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/MySQLdb/connections.py", line 226, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.IntegrityError: (MySQLdb._exceptions.IntegrityError) (1062, "Duplicate entry '3' for key 'ix_resource_idOnChain'")
+[SQL: INSERT INTO resource (title, body, `idOnChain`, `idInUserOnChain`, price, has_price, `endTime`, timestamp, updatetime, filename, `infoHash`, status, `statusOnChain`, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('测试链上项目新文件', '那电脑见到大家', 3, 1, 10000, 0, datetime.datetime(2020, 9, 26, 21, 55), datetime.datetime(2020, 9, 14, 9, 57, 19, 808868), None, '孙毅.jpg', '0e5f7ba47bb301c9cbfbfbea5d2cc532067191fd2ec7bb1a88516547dacb490a', 1, 0, 2)]
+(Background on this error at: http://sqlalche.me/e/gkpj)
+2020-09-14 09:58:08,685 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 09:59:24,711 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 09:59:39,539 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 09:59:44,335 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:00:23,788 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:00:32,165 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:00:38,375 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:03:42,427 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

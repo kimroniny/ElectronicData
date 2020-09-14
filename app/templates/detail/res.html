@@ -32,11 +32,11 @@
             },
             complete: function(XMLHttpRequest, textStatus) {
                 $("#donateLoading").hide();
+                $('#donateModal').hide();
                 $("#donateSpan").show();
                 console.log("complete");
             },
             success: function(data) {
-                data = JSON.parse(data);
                 if (data["code"] == 0) {
                     // document.getElementById("transfer_msg_success").innerHTML =
                     //     data["msg"];
@@ -65,11 +65,7 @@
             <div class="row">
                 <p class="col-sm-3 text-right" style="font-weight: bold">详细描述：</p>
                 <p class="col-sm-9 text-left">{{res.body}}</p>
-            </div>
-            <div class="row">
-                <p class="col-sm-3 text-right" style="font-weight: bold">数据附件：</p>
-                <p class="col-sm-9 text-left">{{res.filename}}</p>
-            </div>
+            </div>            
             <div class="row">
                 <p class="col-sm-3 text-right" style="font-weight: bold">创建时间：</p>
                 <p class="col-sm-9 text-left">{{res.timestamp}}</p>
@@ -91,9 +87,15 @@
                 <p class="col-sm-9 text-left">{{res.price}}</p>
             </div>
             <div class="row">
-                <p class="col-sm-3 text-right" style="font-weight: bold">创建人：</p>
+                <p class="col-sm-3 text-right" style="font-weight: bold;">创建人：</p>
                 <p class="col-sm-9 text-left">
-                    <a href="{{url_for('user', userid=res.issuer.id)}}">{{res.issuer.username}}</a>
+                    <a href="{{url_for('user', userid=res.issuer.id)}}" style="text-decoration: underline;">{{res.issuer.username}}</a>
+                </p>
+            </div>
+            <div class="row">
+                <p class="col-sm-3 text-right" style="font-weight: bold">数据附件：</p>
+                <p class="col-sm-9 text-left">
+                    <img src="{{res.touxiang()}}" alt="项目图片" width="100px">
                 </p>
             </div>
             <div class="row">

@@ -2,11 +2,14 @@ from app import db, login, app
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask import url_for
 from hashlib import md5
 from Crypto.Hash import keccak
 import jwt
 from time import time
 from utils.chain.HitChain import ContractExecType
+import json
+import os
 
 """
 User(1)     ->  Resource(N)     By User.id          -> issue
@@ -55,7 +58,7 @@ class Certs(db.Model):
     #     return self.timestamp_pay.strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self):
-        return {
+        return json.dumps({
             'id': self.id,
             'resource_id': self.resource_id,
             'user_id': self.user_id,
@@ -64,16 +67,11 @@ class Certs(db.Model):
             'idOnChain': self.idOnchain,
             'updatetime': self.updatetime,
             'statusOnChain': self.statusOnChain
-        }
+        })
 
     
     def as_dict(self):
-        return {
-            'id': self.id,
-            'resource_id': self.resource_id,
-            'timestamp_pay': self.transtamp_pay,
-            'value': self.value
-        }
+        return json
 
 
 from enum import Enum
@@ -119,6 +117,9 @@ class Resource(db.Model):
         digest = md5(self.title.encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
+    
+    def touxiang(self):
+        return url_for('static', filename=os.path.join('resfiles', str(self.id), self.filename))
 
     def paid_nums(self):
         return Certs.query.filter_by(
@@ -126,7 +127,7 @@ class Resource(db.Model):
         ).count()
             
     def as_dict(self):
-        return {
+        return json.dumps({
             'id': self.id,
             'title': self.title,
             'desp': self.body,
@@ -134,7 +135,7 @@ class Resource(db.Model):
             'endTime': self.endTime,
             'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
             'issuer': self.issuer.username
-        }
+        })
 
 
 
@@ -194,15 +195,14 @@ class User(UserMixin, db.Model):
         return user['id']
 
     
-
     def __repr__(self):
-        return {
+        return json.dumps({
             'id': self.id,
             'username': self.username,
             'idOnChain': self.idOnChain,
             'address': self.address,
             'balance': self.balance,
             'statusOnChain': self.statusOnChain
-        }
+        })
 
 

@@ -7,7 +7,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 5
 
-    RES_FILE_PATH = os.path.join(basedir, 'resfiles')
+    RES_FILE_PATH = os.path.join(basedir, 'app', 'static', 'resfiles')
 
     MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 465

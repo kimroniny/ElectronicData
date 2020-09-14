@@ -150,6 +150,9 @@ def issue():
                 filedir, res.filename
             )
         )
+        # res.filename = url_for('resfiles', filename=os.path.join(str(res.id), filename))
+        # db.session.commit()
+        
         """
         TODO: 这里要写一个给区块链的ack，表示可以运行了
         然后区块链返回一个值表明项目运行成功与否
@@ -414,7 +417,9 @@ def show_res_transfer():
 def charge():
     form = ChargeForm()
     if form.validate_on_submit():
-        if current_user.check_account_password(form.paypwd.data):
+        if not current_user.account_password_hash:
+            flash('0,请先创建链上账户')
+        elif current_user.check_account_password(form.paypwd.data):
             result = charitySDK.charge(
                 money=form.amount.data, addr=current_user.address)
             if result:
@@ -438,7 +443,9 @@ def charge():
 def withdraw():
     form = WithdDraw()
     if form.validate_on_submit():
-        if current_user.check_account_password(form.paypwd.data):
+        if not current_user.account_password_hash:
+            flash('0,请先创建链上账户')
+        elif current_user.check_account_password(form.paypwd.data):
             result = charitySDK.withdraw(
                 money=form.amount.data, addr=current_user.address, password=form.paypwd.data)
             if result == 0:

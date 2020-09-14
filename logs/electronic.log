@@ -1,4 +1,4 @@
-2020-09-13 22:50:40,912 ERROR: Exception on /trace_donate/9 [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
+2020-09-14 10:03:53,205 ERROR: Exception on /reset_password_request [GET] [in /home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,93 +12,27 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/kr/workspace/ElectronicData/app/routes.py", line 503, in trace_donate
-    enumerate=enumerate,
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 138, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/home/kr/workspace/ElectronicData/app/routes.py", line 303, in reset_password_request
+    title='Reset Password', form=form)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/kr/workspace/ElectronicData/app/templates/trace/trace.html", line 57, in template
-    {% endfor %}
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 268, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 212, in parse_if
-    node.body = self.parse_statements(('name:elif', 'name:else',
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 199, in parse_for
-    body = self.parse_statements(('name:endfor', 'name:else'))
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 223, in parse_if
-    drop_needle=True)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 144, in parse_statement
-    self.fail_unknown_tag(token.value, token.lineno)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 97, in fail_unknown_tag
-    return self._fail_ut_eof(name, self._end_token_stack, lineno)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 90, in _fail_ut_eof
-    self.fail(' '.join(message), lineno)
-  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/jinja2/parser.py", line 59, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endif'. The innermost block that needs to be closed is 'if'.
-2020-09-13 22:50:56,919 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 22:53:36,329 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 22:55:13,302 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 22:59:36,642 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:26:19,182 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:27:31,739 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:39:34,846 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:39:55,920 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:43:24,814 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:44:20,650 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:46:31,472 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:47:21,905 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-13 23:49:19,161 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 00:14:10,533 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 00:22:18,281 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 00:54:01,108 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 00:54:09,751 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 02:05:39,582 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 02:05:51,115 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 02:33:45,391 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
-2020-09-14 02:33:52,500 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+  File "/home/kr/workspace/ElectronicData/app/templates/reset_password_request.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 60, in get_source
+    return self._get_source_fast(environment, template)
+  File "/home/kr/miniconda3/envs/mybc/lib/python3.7/site-packages/flask/templating.py", line 89, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: base.html
+2020-09-14 10:13:57,744 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:18:51,044 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:19:13,276 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]

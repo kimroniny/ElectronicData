@@ -136,11 +136,11 @@ class ResDonateForm(FlaskForm):
     submit = SubmitField("确认转账")
 
 class ChargeForm(FlaskForm):
-    amount = IntegerField('充值金额(ED)', validators=[NumberRange(1, 2**20), DataRequired()])
+    amount = IntegerField('充值金额(ED)', validators=[NumberRange(1, 2**40), DataRequired()])
     paypwd = PasswordField('链上账户密码', validators=[DataRequired()])
     submit = SubmitField('充值')
 
 class WithdDraw(FlaskForm):
-    amount = IntegerField('提现金额', validators=[NumberRange(1, 2**20), DataRequired()])
+    amount = IntegerField('提现金额', validators=[NumberRange(1, 2**40), DataRequired()])
     paypwd = PasswordField('链上账户密码', validators=[DataRequired()])
     submit = SubmitField('提现')
