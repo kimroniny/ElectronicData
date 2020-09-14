@@ -1,10 +1,11 @@
+import json
 CHAINCONFIG = {
     'charity': {
         'url': 'http://192.168.64.136:3001',
         'contract': {
             'charity': {
-                'address':'0xE53AD840EFFb1c7FBC8f79dA438380053409E652',
-                'abifile':'./contract/abi/charity.abi',
+                'address':open('./contract/address', 'r').read().strip('\n\r '),
+                'abifile':'./contract/abi/Charity.abi',
             }
         },
         'gasPrice': 0,

@@ -23,8 +23,15 @@ def test_event(sdk: HitSdk):
     print("eventArgsInfo: {}".format(eventArgsInfo))
     print("err: {}".format(err))
 
+def test_compileAndDeploy(sdk:HitSdk):
+    contract_file = './contract/Charity.sol'
+    addr, abi, err = sdk.compileAndDeploy(contract_file)
+    print("addr: {}".format(addr))
+    print("err: {}".format(err))
+
 if __name__ == "__main__":
     charityConfig = CHAINCONFIG['charity']
     contract = charityConfig['contract']['charity']
     myeth = HitSdk(url=charityConfig['url'], name="node1", poa=False)
-    test_newAccount(myeth)
+    # test_newAccount(myeth)
+    test_compileAndDeploy(myeth)

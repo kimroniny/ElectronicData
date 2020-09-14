@@ -1,11 +1,13 @@
 from web3 import Web3, HTTPProvider
 from web3.logs import STRICT, IGNORE, DISCARD, WARN
 from web3.middleware import geth_poa_middleware
-import time
+from solc import compile_standard
+import time, os
 from functools import wraps
 import argparse
 import json, traceback
 from enum import Enum, unique
+
 
 
 def recordTime(func):
@@ -48,6 +50,84 @@ class HitSdk:
         self.contractConfig = ContractConfig()
         self.name = name
         if poa: self.w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+    
+    def __compile(self, contract_filename, contract_content):
+        print("compiling contract......")
+        try:
+            compiled_sol = compile_standard({
+                "language": "Solidity",
+                "sources": {
+                    contract_filename: {
+                        "content": """{}
+                        """.format(contract_content)
+                    }
+                },
+                "settings":
+                    {
+                        "outputSelection": {
+                            "*": {
+                                "*": [
+                                    "metadata", "evm.bytecode"
+                                    , "evm.bytecode.sourceMap"
+                                ]
+                            }
+                        }
+                    }
+            })
+            return compiled_sol, ''
+        except Exception as e:
+            print(traceback.format_exc())
+            return {}, str(e)
+        
+        
+    def __deploy(self, compiled_sol, contract_filename, contract_name):
+        print("deploying contract......")
+        address = ''
+        try:
+            bytecode = compiled_sol['contracts'][contract_filename][contract_name]['evm']['bytecode']['object']
+            abi = json.loads(compiled_sol['contracts'][contract_filename][contract_name]['metadata'])['output']['abi']
+            pre_contract = self.w3.eth.contract(abi=abi, bytecode=bytecode)
+            tx_hash = pre_contract.constructor().transact({'from': self.w3.toChecksumAddress(self.defaultAccount)})
+            tx_receipt = self.w3.eth.waitForTransactionReceipt(tx_hash)
+            address = tx_receipt.contractAddress
+            return address, json.dumps(abi), ""
+        except Exception as e:
+            print(traceback.format_exc())
+            return '', '', str(e)
+            
+
+    def compileAndDeploy(self, contractfile):
+        """合约文件的文件名和合约对象名必须保持一致
+
+        Args:
+            contractfile (str): 合约文件的路径
+
+        Raises:
+            Exception: [description]
+            Exception: [description]
+            Exception: [description]
+
+        Returns:
+            [type]: [description]
+        """
+        try:
+            print("check contractFile....")
+            if not os.path.exists(contractfile):
+                raise Exception("contract file not exist !!!")
+            contract_filename = os.path.basename(contractfile)
+            contract_name = contract_filename.split('.')[0]
+            with open(contractfile, 'r') as f:
+                contract_content = f.read()
+            compiled_sol, err = self.__compile(contract_filename, contract_content)
+            if err: raise Exception(err)
+            addr, abistr, err = self.__deploy(compiled_sol,contract_filename=contract_filename,contract_name=contract_name)
+            if err: raise Exception(err)
+            print("compileAndDeploy contract succeeded!")
+            return addr, abistr, ''            
+        except Exception as e:
+            print(traceback.format_exc())
+            print("compileAndDeploy contract failed!")
+            return '', '', str(e)
     
     def unlockAccount(self, account, password="", duration=300):
         try:
@@ -140,7 +220,7 @@ class HitSdk:
     @property
     def defaultAccount(self):
         if not self.w3.eth.defaultAccount:
-            return self.w3.eth.accounts[0] 
+            self.w3.eth.defaultAccount = self.w3.eth.accounts[0] 
         return self.w3.eth.defaultAccount
 
 if __name__ == "__main__":

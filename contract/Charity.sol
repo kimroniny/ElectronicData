@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.7.0;
 
-contract Electronic {
+contract Charity {
 
     enum CharityType {WAIT, PENDING, FINISH}
 
@@ -65,7 +65,7 @@ contract Electronic {
 
     function getUserById(uint userId) view public returns (address) {
         require(userId < userAddrs.length, "userId can not be larger than users.length");
-        return userAddrs[userId]
+        return userAddrs[userId];
     } 
 
     function getUserNumber() view public returns (uint) {
