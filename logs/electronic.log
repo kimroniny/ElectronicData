@@ -36,3 +36,4 @@ jinja2.exceptions.TemplateNotFound: base.html
 2020-09-14 10:13:57,744 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-14 10:18:51,044 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
 2020-09-14 10:19:13,276 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
+2020-09-14 10:35:19,592 INFO: Electronic startup [in /home/kr/workspace/ElectronicData/app/__init__.py:58]
