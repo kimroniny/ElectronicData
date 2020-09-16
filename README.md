@@ -9,6 +9,13 @@ electronic datas sharing frontend based flask smartcontract based future
 flask db init
 flask db migrate
 flask db upgrade
+flask run -h 0.0.0.0 -p 5000
+```
+
+# 环境预部署
+
+```bash
+python prepare-environment.py
 ```
 
 
