@@ -1,0 +1,31 @@
+{% if not current_user.address %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#warnAccountModalButton').click();
+})    
+</script>
+{% endif %}
+<button style="margin-bottom: 15px; display: none;" type="button" class="btn btn-primary" data-toggle="modal" id="warnAccountModalButton" data-target="#warnAccount" data-whatever="@mdo"></button>
+<div class="modal fade" id="warnAccount" tabindex="-1" role="dialog" aria-labelledby="warnAccountLabel" style="display: none">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <div class="text-center">请您先创建区块链账户，否则无法创建募捐项目、捐赠、充值、提现等操作</div>
+            </div>
+            
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" href="{{ url_for('index') }}">
+                    关闭
+                </a>
+                <!-- 这里的button使用ajax写捐赠的逻辑 -->
+                <a type="button" class="btn btn-primary" href="{{  url_for('register_chain_account') }}">
+                    创建链上账户
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

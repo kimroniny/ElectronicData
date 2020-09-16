@@ -15,7 +15,7 @@
     <hr>
 </div>
 <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-    <span>在过去的日子里，您曾为 {{all_num_dist}} 个项目捐赠善款，累计捐款 {{all_num}} 次，感谢您带给无数人以希望。</span>
+    <span>在过去的日子里，您曾为 {{allnum_dist}} 个项目捐赠善款，累计捐款 {{allnum}} 次，感谢您带给无数人以希望。</span>
 </div>
 <div class="col-sm-12 col-lg-10 col-lg-offset-1">
     <hr>
@@ -37,14 +37,14 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     受捐人地址：
                     <a href="{{ url_for('user', userid=resource.res.issuer.id) }}">{{resource.res.issuer.address}}</a>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     捐款时间：{{resource.donate_timestamp}}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     捐款(ED)：
                     <strong>
                             {{resource.donate_price}}

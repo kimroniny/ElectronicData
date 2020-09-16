@@ -24,7 +24,9 @@
             data: datas,
             dataType: "json",
             beforeSend: function(XMLHttpRequest) {
-                $("#donateSpan").disabled = true;
+                
+                $("#closeButton").attr("disabled",true);
+                $("#donateButton").attr("disabled",true);
                 $("#donateLoading").show();
                 var start = new Date().getTime();
                 console.log(start);
@@ -32,18 +34,19 @@
             },
             complete: function(XMLHttpRequest, textStatus) {
                 $("#donateLoading").hide();
-                $('#donateModal').hide();
-                $("#donateSpan").show();
+                // $('#donateModal').modal('hide');
+                $("#closeButton").attr("disabled",false);
+                $("#donateButton").attr("disabled",false);
                 console.log("complete");
             },
             success: function(data) {
                 if (data["code"] == 0) {
                     // document.getElementById("transfer_msg_success").innerHTML =
                     //     data["msg"];
-                    toastr["success"]("success request");
+                    toastr["success"]("捐赠成功，感谢您的支持呐！(*^▽^*)");
                 } else {
                     // document.getElementById("transfer_msg_error").innerHTML = data["msg"];
-                    toastr["error"]("error request");
+                    toastr["error"]("捐赠失败，失败原因: "+data['err']);
                 }
             },
             error: function(data) {},
@@ -99,23 +102,36 @@
                 </p>
             </div>
             <div class="row">
-                <div class="col-md-3 col-md-offset-3">
+                {% if current_user != res.issuer %}
+                <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+                {% else %}
+                <div class="col-sm-12 col-lg-12 col-md-12 text-center">
+                {% endif %}
                     <a href="{{url_for('trace_donate', resid=res.id)}}" class="btn btn-primary">查看捐款人列表</a>
                 </div>
-                <div class="col-md-2 col-md-offset-0">
+                {% if current_user != res.issuer %}
+                <div class="col-sm-12 col-md-6 col-lg-6 text-center">
                     <!-- 增加模态框，点击按钮，展示捐赠选项 -->
+                    {% if not current_user.address %}
+                    <button disabled style="margin-bottom: 15px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#donateModal" data-whatever="@mdo">
+                        捐赠（请先创建区块链账户）
+                    </button>
+                    {% else %}
                     <button style="margin-bottom: 15px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#donateModal" data-whatever="@mdo">
                         捐赠
                     </button>
-                    <!-- <a href="{{url_for('res_donate', resid=res.id)}}" class="btn btn-primary">捐赠</a> -->
+                    {% endif %}
+                    
+                </div>
+                <!-- <a href="{{url_for('res_donate', resid=res.id)}}" class="btn btn-primary">捐赠</a> -->
                     <!-- 下面是捐款的模态框 -->
                     <div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" style="display: none">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog" role="document" style="width: 450px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
-                                    </button>
+                                    </button> -->
                                     <h4 class="modal-title" id="donateModalLabel">捐赠</h4>
                                 </div>
                                 <div class="modal-body">
@@ -133,15 +149,15 @@
                                         <div class="spinner-border" role="status">
                                             <span class="sr-only">Loading...</span>
                                         </div>
-                                        <div style="margin-top: 10px;">
+                                        <div style="margin-top: 10px; margin-bottom: 10px;">
                                             <span>正在区块链上记录您的爱心，Thanks♪(･ω･)ﾉ</span>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    <button type="button" id="closeButton" class="btn btn-default" data-dismiss="modal">
                                         关闭
                                     </button>
                                     <!-- 这里的button使用ajax写捐赠的逻辑 -->
-                                    <button type="button" class="btn btn-primary" onclick="transfer();">
+                                    <button type="button" id="donateButton" class="btn btn-primary" onclick="transfer();">
                                         <span id="donateSpan">捐款</span>
                                     </button>
                                 </div>
@@ -149,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
 
         </div>

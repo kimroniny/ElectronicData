@@ -25,7 +25,8 @@ def checkPayPwd(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
         if current_user.account_password_hash == None:
-            flash("0,充值、提现、捐款操作请首先创建链上账户")
+            pass
+            # flash("0,充值、提现、捐款操作请首先创建链上账户")
             # return redirect(url_for('user', userid=current_user.id))
         # else:
         return f(*args, **kwargs)
@@ -127,7 +128,7 @@ def issue():
             endTime=endTime, money=money, infoHash=infoHash, owner=current_user.address)
         if not charityInfo:
             flash(message="0,"+err)
-            return render_template('issue/res.html', title="issue resource", form=form)
+            return render_template('issue/res.html', form=form)
         res = Resource(
             title=form.title.data,
             idOnChain=charityInfo['id'],
@@ -174,8 +175,9 @@ def res_donate():
             'err': ''
         }
         if request.method == "POST":
-            money, password, resid = int(
-                request.form['money']), request.form['password'], int(request.form['resid'])
+            money, password, resid = int(request.form['money']), request.form['password'], int(request.form['resid'])
+            if current_user.balance < money:
+                raise Exception("余额不足")
             if not current_user.check_account_password(password):
                 raise Exception("链上账户解锁密码错误")
             unlockFlag = charitySDK.unlockAccount(
@@ -224,6 +226,8 @@ def res_donate():
             else:
                 raise Exception(
                     "charity update hasMoney and status failed, keys missing")
+            current_user.balance = charitySDK.getAccountBalance(current_user.address)
+            db.session.commit()
         else:
             raise Exception("DONATE REQUEST METHOD ERROR, only support POST")
     except Exception as e:
@@ -413,7 +417,7 @@ def show_res_transfer():
 
 @app.route('/charge', methods=['GET', 'POST'])
 @login_required
-@checkPayPwd
+# @checkPayPwd
 def charge():
     form = ChargeForm()
     if form.validate_on_submit():
@@ -439,7 +443,7 @@ def charge():
 
 @app.route('/withdraw', methods=['GET', 'POST'])
 @login_required
-@checkPayPwd
+# @checkPayPwd
 def withdraw():
     form = WithdDraw()
     if form.validate_on_submit():
