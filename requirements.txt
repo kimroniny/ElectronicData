@@ -38,7 +38,7 @@ multiaddr==0.0.8
 mysqlclient==1.4.4
 netaddr==0.7.19
 parsimonious==0.8.1
-Pillow==6.2.1
+Pillow==8.1.1
 protobuf==3.10.0
 pycodestyle==2.5.0
 pycryptodome==3.9.0
